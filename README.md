@@ -1,4 +1,4 @@
-# 1 maven 创建springBoot项目
+#  maven 创建springBoot项目
 
 # Spring Boot 选择外部Tomcat运行，打war包的修改流程
 参照 https://blog.csdn.net/limenghua9112/article/details/81170286
@@ -42,3 +42,5 @@ public class WebInitializer extends SpringBootServletInitializer {
 ```
 4 在eclipse下 项目上右键 - export- WAR file 然后导出到tomcat的webapps文件夹下, 即生成项目的WAR文件（例如springboot520.war）
 在浏览器输入http://localhost:3000/springboot520/ 即可打开
+
+5 遇到的问题 放到外部tomcat 无法访问controller 至今误解
