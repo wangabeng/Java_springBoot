@@ -138,10 +138,39 @@ public class  Box implements Serializable
 }  
 ```
 
-6、相关注意事项
-    a）序列化时，只对对象的状态进行保存，而不管对象的方法；
-    b）当一个父类实现序列化，子类自动实现序列化，不需要显式实现Serializable接口；
-    c）当一个对象的实例变量引用其他对象，序列化该对象时也把引用对象进行序列化；
-    d）并非所有的对象都可以序列化，,至于为什么不可以，有很多原因了,比如：
-        1.安全方面的原因，比如一个对象拥有private，public等field，对于一个要传输的对象，比如写到文件，或者进行rmi传输  等等，在序列化进行传输的过程中，这个对象的private等域是不受保护的。
-       2. 资源分配方面的原因，比如socket，thread类，如果可以序列化，进行传输或者保存，也无法对他们进行重新的资源分  配，而且，也是没有必要这样实现。
+6、相关注意事项  
+    a）序列化时，只对对象的状态进行保存，而不管对象的方法；  
+    b）当一个父类实现序列化，子类自动实现序列化，不需要显式实现Serializable接口；  
+    c）当一个对象的实例变量引用其他对象，序列化该对象时也把引用对象进行序列化；  
+    d）并非所有的对象都可以序列化，,至于为什么不可以，有很多原因了,比如：  
+        1.安全方面的原因，比如一个对象拥有private，public等field，对于一个要传输的对象，比如写到文件，或者进行rmi传输  等等，在序列化进行传输的过程中，这个对象的private等域是不受保护的。  
+       2. 资源分配方面的原因，比如socket，thread类，如果可以序列化，进行传输或者保存，也无法对他们进行重新的资源分  配，而且，也是没有必要这样实现。  
+# 搭建spring-boot项目报错Error parsing lifecycle processing instructions
+问题及其产生背景
+
+刚开始学习搭建spring-boot项目，这里遇到一个问题，花了一点时间，现在把它记录下来。
+
+新建完maven项目之后，在向pom.xml文件添加parent节点（内容如下）时文件报错了。
+```
+<parent>
+<groupId>org.springframework.boot</groupId>
+<artifactId>spring-boot-starter-parent</artifactId>
+<version>1.4.2.RELEASE</version>
+</parent>
+```
+
+报错的信息如下：
+
+Error parsing lifecycle processing instructions
+
+解决办法  
+
+根据问题进行搜索，结果搜索到了两种思路：  
+
+1.说是neon这个版本的eclipse有问题，需要更新maven插件。  
+ 
+2.说是依赖冲突了，可以吧maven仓库清空，重新更新一下。  
+
+试了第一种方法，但是并没有解决这个问题。所以试了第二种方法，将用户主目录下.m2/repository/下的依赖全部清空。然后，在eclipse中右键项目 --> Maven --> Update Project...。等待更新完成后，错误自动消失了。  
+
+# XXXX
