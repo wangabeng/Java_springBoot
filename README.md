@@ -174,9 +174,15 @@ Error parsing lifecycle processing instructions
 试了第一种方法，但是并没有解决这个问题。所以试了第二种方法，将用户主目录下.m2/repository/下的依赖全部清空。然后，在eclipse中右键项目 --> Maven --> Update Project...。等待更新完成后，错误自动消失了。  
 
 # 使用springboot模板快速搭建springboot项目
-1 进入https://start.spring.io/ 选择相应的版本 下载；  
+1 进入https://start.spring.io/ 选择相应的版本 下载；
+特别注意版本之间的关系
+springboot版本使用2.0.2  
+对应jdk版本适用1.8  
+maven不能为2（注意看错误提示 注意修改eclipse关联的maven安装配置）  
+###版本一定要对应上 一定 一定
+
 2 在eclipse中 选择import，选择下载的项目根目录；  
-3 导入后，打开paqiang工具，下载依赖。如果报错，可以考虑把parent的版本号降低（比如改为1.5.2.RELEASE），然后重新下载依赖
+3 导入后，打开paqiang工具，下载依赖。如果报错，可以考虑把parent的版本号降低（比如改为2.0.2.RELEASE 或更低版本1.5.2.RELEASE ），然后重新下载依赖
 ```
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -185,4 +191,5 @@ Error parsing lifecycle processing instructions
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 ```
-4 如果还是保持，可以进入C:\Users\Administrator\.m2\repository，把下载的依赖全部删掉，然后重新安装。安装的时候，记得开启paqiang
+4 重新下载以来后 要更新maven project
+5 如果还是保持，可以进入C:\Users\Administrator\.m2\repository，把下载的依赖全部删掉，然后重新安装。安装的时候，记得开启paqiang
