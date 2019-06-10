@@ -193,3 +193,30 @@ maven不能为2（注意看错误提示 注意修改eclipse关联的maven安装�
 ```
 4 重新下载以来后 要更新maven project
 5 如果还是保持，可以进入C:\Users\Administrator\.m2\repository，把下载的依赖全部删掉，然后重新安装。安装的时候，记得开启paqiang
+
+# Spring boot项目中自定义的controller不生效的解决办法  
+问题描述：
+例如 Springboot0610Application.java包是在包com.abeng.east.springboot0610里，如果在此包下新建一个controller，没问题。但是如果新建一个子包：  
+com.abeng.east.springboot0610.controller  
+在此包下新建一个controller，在未定义错误拦截的情况下，则会出现找不到此controller的页面。  
+解决办法：  
+在applications类中增加一行注解，意思是扫描该包下及子包下的所有controller类  
+@ComponentScan("com.abeng.east.springboot0610")  
+com.abeng.east.springboot0610为父包  
+```
+package com.abeng.east.springboot0610;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
+
+@SpringBootApplication
+@ComponentScan("com.abeng.east.springboot0610")
+public class Springboot0610Application {
+
+	public static void main(String[] args) {
+		SpringApplication.run(Springboot0610Application.class, args);
+	}
+
+}
+```
