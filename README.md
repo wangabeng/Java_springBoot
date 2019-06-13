@@ -222,4 +222,4 @@ public class Springboot0610Application {
 ```
 
 # springboot 文件上传例子
-https://www.callicoder.com/spring-boot-file-upload-download-rest-api-example/
+https://o7planning.org/en/11679/spring-boot-file-upload-example
