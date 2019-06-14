@@ -225,6 +225,7 @@ public class Springboot0610Application {
 https://o7planning.org/en/11679/spring-boot-file-upload-example
 
 # OKHttp中设置请求头 类似postman中发送get请求 带authorization认证
+参考 https://www.jianshu.com/p/cdab05b87a9d  
 ```
 OKHttp中设置请求头特别简单，在创建request对象时调用一个方法即可。 
 使用示例如下：
@@ -234,4 +235,45 @@ Request request = new Request.Builder()
                 .header("User-Agent", "OkHttp Headers.java")
                 .addHeader("token", "myToken")
                 .build();
+```
+```
+MultipartBody 可以构建复杂的请求体，与HTML文件上传形式兼容。
+多块请求体中每块请求都是一个请求体，可以定义自己的请求头，这些请求头可以用来描述这块请求。
+例如他的Content-Disposition。如果Content-Length和Content-Type可用的话，他们会被自动添加到请求头中。
+
+private static final String IMGUR_CLIENT_ID = "...";
+private static final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
+private void postMultipartBody() {
+    OkHttpClient client = new OkHttpClient();
+    // Use the imgur image upload API as documented at https://api.imgur.com/endpoints/image
+    MultipartBody body = new MultipartBody.Builder("AaB03x")
+            .setType(MultipartBody.FORM)
+            .addPart(
+                    Headers.of("Content-Disposition", "form-data; name=\"title\""),
+                    RequestBody.create(null, "Square Logo"))
+            .addPart(
+                    Headers.of("Content-Disposition", "form-data; name=\"image\""),
+                    RequestBody.create(MEDIA_TYPE_PNG, new File("website/static/logo-square.png")))
+            .build();
+
+    Request request = new Request.Builder()
+            .header("Authorization", "Client-ID " + IMGUR_CLIENT_ID)
+            .url("https://api.imgur.com/3/image")
+            .post(body)
+            .build();
+
+    Call call = client.newCall(request);
+    call.enqueue(new Callback() {
+        @Override
+        public void onFailure(Call call, IOException e) {
+
+        }
+
+        @Override
+        public void onResponse(Call call, Response response) throws IOException {
+            System.out.println(response.body().string());
+
+        }
+    });
+}
 ```
