@@ -223,3 +223,15 @@ public class Springboot0610Application {
 
 # springboot 文件上传例子
 https://o7planning.org/en/11679/spring-boot-file-upload-example
+
+# OKHttp中设置请求头 类似postman中发送get请求 带authorization认证
+```
+OKHttp中设置请求头特别简单，在创建request对象时调用一个方法即可。 
+使用示例如下：
+
+Request request = new Request.Builder()
+                .url("http://www.baidu.com")
+                .header("User-Agent", "OkHttp Headers.java")
+                .addHeader("token", "myToken")
+                .build();
+```
