@@ -277,3 +277,71 @@ private void postMultipartBody() {
     });
 }
 ```
+
+# okHttp发送post请求和get请求 失效
+```
+package com.abeng.east.springboot0610;
+
+import java.io.IOException;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+
+@RestController
+public class Hello {
+	@RequestMapping("/test1")
+	public String sayHello() {
+		// 发送post请求
+		
+		/*
+
+		OkHttpClient client = new OkHttpClient();
+		String jsonStr = "{'abeng': 'haha'}";
+		
+		MediaType JSON = MediaType.get("application/json; charset=utf-8");
+		RequestBody body = RequestBody.create(jsonStr, JSON);
+
+		Request request = new Request.Builder()
+				.url("https://www.baidu.com")
+				.post(body)
+				.build();
+
+		try (Response response = client.newCall(request).execute()) {
+			return response.body().string();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		*/
+		
+		// 发送get请求
+
+		OkHttpClient client = new OkHttpClient();
+				
+		MediaType JSON = MediaType.get("application/json; charset=utf-8");
+		
+		Request request = new Request.Builder()
+				.url("https://api.github.com/user")
+				.header("Authorization", "cd4949a7ef27fb5c856a28dde39460a53632ead6")
+				.get()
+				.build();
+
+		try (Response response = client.newCall(request).execute()) {
+			return response.body().string();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+
+		return null;
+	}
+}
+
+```
