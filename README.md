@@ -403,3 +403,13 @@ public class Hello {
 
 # Thymeleaf 模板的使用
 https://www.jianshu.com/p/ed9d47f92e37
+
+# 使用热部署 就是修改了类或配置文件以后，不用手工启动服务，springboot提供了spring-boot-devtolls， 能够在文件变化的时候自动加载spring boot应用。
+```
+        <!-- optional=true,依赖不会传递，该项目依赖devtools；之后依赖myboot项目的项目如果想要使用devtools，需要重新引入 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <optional>true</optional>
+        </dependency>
+```
