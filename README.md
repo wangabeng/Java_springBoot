@@ -413,3 +413,18 @@ https://www.jianshu.com/p/ed9d47f92e37
             <optional>true</optional>
         </dependency>
 ```
+# thymleaf在页面中无法获取session数据（本来已经设置好了）报错
+原因是：如果我们添加Thymeleaf 依赖，，而没有进行任何配置，或者添加默认目录，启动应用时就会报错。
+```
+#thymeleaf 配置
+＃模板的模式，支持 HTML, XML TEXT JAVASCRIPT
+spring.thymeleaf .mode=HTMLS
+＃编码 可不用配置
+spri 口g thymeleaf encoding=UTF
+＃内容类别，可不用配置
+spring thymeleaf conte type text/html
+＃开发配置为 false ，避免修改模板还要重启服务器
+spring.thymeleaf.cache=false
+＃配置模板路径，默认是 templates ，可以不用配置
+#spring . thymeleaf.prefix=classpath : /templates/ 
+```
