@@ -428,3 +428,13 @@ spring.thymeleaf.cache=false
 ＃配置模板路径，默认是 templates ，可以不用配置
 #spring . thymeleaf.prefix=classpath : /templates/ 
 ```
+# thymeleaf模板引擎在没数据的情况下报错 解决办法
+类似vue的v-if 要先判断数据是否存在
+```
+// 正确的方法
+<p th:if="${session.user!=null}"  th:text="${session.user.getName()}"></p>
+```
+如果只像以下这样写，刚开始的时候session.user是不存在的 所以不能执行这个方法 session.user.getName() 所以会报错
+```
+<p th:text="${session.user.getName()}"></p>
+```
