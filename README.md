@@ -438,3 +438,5 @@ spring.thymeleaf.cache=false
 ```
 <p th:text="${session.user.getName()}"></p>
 ```
+# 一个springboot mysql最佳案例
+http://zetcode.com/springboot/mysql/
