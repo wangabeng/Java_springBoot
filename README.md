@@ -440,3 +440,6 @@ spring.thymeleaf.cache=false
 ```
 # 一个springboot mysql最佳案例
 http://zetcode.com/springboot/mysql/
+
+# 一个springboot mybatis mysql的最佳案例  
+https://www.cnblogs.com/wangshen31/p/8744157.html
