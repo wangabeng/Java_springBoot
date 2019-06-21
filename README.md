@@ -443,3 +443,12 @@ http://zetcode.com/springboot/mysql/
 
 # 一个springboot mybatis mysql的最佳案例  
 https://www.cnblogs.com/wangshen31/p/8744157.html
+
+# spring boot导入init工程后 报错 RequestMapping cannot be resolved to a type  
+没有引入controller 路由开发的依赖 在pom文件中加入依赖 ，成功解决
+```
+<dependency>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-starter-web</artifactId>
+</dependency>
+```
