@@ -463,3 +463,5 @@ spring.datasource.username=b05ea9c45afa32
 spring.datasource.password=5c2a2abd
 spring.datasource.driver-class-name: com.mysql.jdbc.Driver
 ```
+# mybatis绑定错误-- Invalid bound statement (not found)  
+https://www.jianshu.com/p/800fe918cc7a
