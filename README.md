@@ -452,3 +452,14 @@ https://www.cnblogs.com/wangshen31/p/8744157.html
 	<artifactId>spring-boot-starter-web</artifactId>
 </dependency>
 ```
+
+# Spring Boot 启动错误：To display the conditions report re-run your application with 'debug' enable
+原因 在pom文件中引入了mysql依赖 但是没有配置数据库信息  
+解决办法：引入数据库配置信息
+
+```
+spring.datasource.url=us-cdbr-iron-east-02.cleardb.net
+spring.datasource.username=b05ea9c45afa32
+spring.datasource.password=5c2a2abd
+spring.datasource.driver-class-name: com.mysql.jdbc.Driver
+```
