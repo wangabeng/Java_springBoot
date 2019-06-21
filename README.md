@@ -178,7 +178,7 @@ Error parsing lifecycle processing instructions
 特别注意版本之间的关系
 springboot版本使用2.0.2  
 对应jdk版本适用1.8  
-maven不能为2（注意看错误提示 注意修改eclipse关联的maven安装配置）  
+maven如果过高，如果出现报错，可以把版本改为2.0.2.RELEASE（注意看错误提示 注意修改eclipse关联的maven安装配置）  
 ###版本一定要对应上 一定 一定
 
 2 在eclipse中 选择import，选择下载的项目根目录；  
