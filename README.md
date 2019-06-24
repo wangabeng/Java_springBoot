@@ -465,3 +465,15 @@ spring.datasource.driver-class-name: com.mysql.jdbc.Driver
 ```
 # mybatis绑定错误-- Invalid bound statement (not found)  
 https://www.jianshu.com/p/800fe918cc7a
+
+# 出现问题 报错
+com.mysql.jdbc.exceptions.jdbc4.MySQLNonTransientConnectionException: No operations allowed after connection closed.
+见https://blog.csdn.net/Jack__iT/article/details/80467286
+暂时的解决办法
+可在mysql的url中加入autoReconnect=true，这样就可以解决。
+
+# 出现问题 报错
+java.lang.NullPointerException
+先判断对象存不存在 然后再调用该对象的方法 如果一上来就调用，在对象都不存在的情况下 就会报错
+
+
