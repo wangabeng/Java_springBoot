@@ -548,3 +548,5 @@ public class InterceptorRegister extends WebMvcConfigurationSupport {
 ```
 3：访问http://localhost:8080/freemarker可见日志，后台已经拦截到
 
+# spring boot设置跨域请求
+https://www.cnblogs.com/yuansc/p/9076604.html
