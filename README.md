@@ -476,4 +476,69 @@ com.mysql.jdbc.exceptions.jdbc4.MySQLNonTransientConnectionException: No operati
 java.lang.NullPointerException
 先判断对象存不存在 然后再调用该对象的方法 如果一上来就调用，在对象都不存在的情况下 就会报错
 
+# 增加拦截器
+https://www.jianshu.com/p/fe7428e2e5b0
+1：创建拦截器类，实现HandlerInterceptor接口  
+```
+package com.duck.interceptor;
 
+import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+public class DuckTestInterceptor implements HandlerInterceptor {
+
+    public boolean preHandle(HttpServletRequest request,
+                             HttpServletResponse response, Object handler) throws Exception {
+        System.out.println(this.getClass().getName() + "<------>preHandle");
+        return true;
+    }
+
+    public void postHandle(HttpServletRequest request,
+                           HttpServletResponse response, Object handler,
+                           ModelAndView modelAndView) throws Exception {
+        System.out.println(this.getClass().getName() + "<------>postHandle");
+
+    }
+
+    public void afterCompletion(HttpServletRequest request,
+                                HttpServletResponse response, Object handler, Exception ex)
+            throws Exception {
+        System.out.println(this.getClass().getName() + "<------>afterCompletion");
+
+    }
+
+}
+```
+
+2：创建java类，继承WebMvcConfigurerAdapter，重写addInterceptors方法  
+实例化拦截器类并将其添加到拦截器链中。  
+```
+package com.duck.interceptor;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+
+@Configuration
+public class InterceptorRegister extends WebMvcConfigurerAdapter{
+
+    private static final Logger logger = LoggerFactory.getLogger(InterceptorRegister.class);
+
+    /*
+     * 添加spring中的拦截器
+     */
+    @Override
+    public void addInterceptors(InterceptorRegistry registry){
+        registry.addInterceptor(new DuckTestInterceptor()).addPathPatterns("/freemarker/**");
+        super.addInterceptors(registry);
+    }
+
+}
+3：访问http://localhost:8080/freemarker可见日志，后台已经拦截到
+
+```
