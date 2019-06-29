@@ -550,3 +550,4 @@ public class InterceptorRegister extends WebMvcConfigurationSupport {
 
 # spring boot设置跨域请求
 https://www.cnblogs.com/yuansc/p/9076604.html
+https://www.jianshu.com/p/470de10b9eec
