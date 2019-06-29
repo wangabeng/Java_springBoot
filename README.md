@@ -478,67 +478,73 @@ java.lang.NullPointerException
 
 # 增加拦截器
 https://www.jianshu.com/p/fe7428e2e5b0
-1：创建拦截器类，实现HandlerInterceptor接口  
+1：创建拦截器类DuckTestInterceptor，实现HandlerInterceptor接口  
 ```
-package com.duck.interceptor;
-
-import org.springframework.web.servlet.HandlerInterceptor;
-import org.springframework.web.servlet.ModelAndView;
+package com.ui.toto.toto.interceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class DuckTestInterceptor implements HandlerInterceptor {
+import org.jboss.logging.Logger;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-    public boolean preHandle(HttpServletRequest request,
-                             HttpServletResponse response, Object handler) throws Exception {
-        System.out.println(this.getClass().getName() + "<------>preHandle");
-        return true;
-    }
-
-    public void postHandle(HttpServletRequest request,
-                           HttpServletResponse response, Object handler,
-                           ModelAndView modelAndView) throws Exception {
-        System.out.println(this.getClass().getName() + "<------>postHandle");
-
-    }
-
-    public void afterCompletion(HttpServletRequest request,
-                                HttpServletResponse response, Object handler, Exception ex)
-            throws Exception {
-        System.out.println(this.getClass().getName() + "<------>afterCompletion");
-
-    }
+public class DuckTestInterceptor extends HandlerInterceptorAdapter {
+	private static final Logger logger = Logger.getLogger(DuckTestInterceptor.class);
+	
+	@Override
+	public boolean preHandle(HttpServletRequest request,
+							 HttpServletResponse response,
+							 Object handler) {
+		logger.info("================ Before Method");
+		return true;
+	}
+	
+	@Override
+	public void postHandle( HttpServletRequest request,
+							HttpServletResponse response,
+							Object handler,
+							ModelAndView modelAndView) {
+		logger.info("================ Method Executed");
+	}
+	
+	@Override
+	public void afterCompletion(HttpServletRequest request,
+								HttpServletResponse response, 
+								Object handler, 
+								Exception ex) {
+		logger.info("================ Method Completed");
+	}
 
 }
+
 ```
 
-2：创建java类，继承WebMvcConfigurerAdapter，重写addInterceptors方法  
+2：创建java类InterceptorRegister，继承WebMvcConfigurerAdapter，重写addInterceptors方法  
 实例化拦截器类并将其添加到拦截器链中。  
 ```
-package com.duck.interceptor;
+package com.ui.toto.toto.interceptor;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
 @Configuration
-public class InterceptorRegister extends WebMvcConfigurerAdapter{
+public class InterceptorRegister extends WebMvcConfigurationSupport {
+	@Bean
+	public HandlerInterceptor getMyInterceptor() {
+		return new DuckTestInterceptor();
+	}
 
-    private static final Logger logger = LoggerFactory.getLogger(InterceptorRegister.class);
-
-    /*
-     * 添加spring中的拦截器
-     */
-    @Override
-    public void addInterceptors(InterceptorRegistry registry){
-        registry.addInterceptor(new DuckTestInterceptor()).addPathPatterns("/freemarker/**");
-        super.addInterceptors(registry);
-    }
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		registry.addInterceptor(getMyInterceptor()).addPathPatterns("/**");
+	}
 
 }
-3：访问http://localhost:8080/freemarker可见日志，后台已经拦截到
 
 ```
+3：访问http://localhost:8080/freemarker可见日志，后台已经拦截到
+
