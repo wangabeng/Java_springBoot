@@ -560,3 +560,16 @@ http://how2j.cn/k/springboot/springboot-error/1643.html#nowhere
 
 # springboot集成ueditor富文本编辑器（不需修改ueditor源码）
 https://www.jianshu.com/p/006e65711de0
+
+# 事务管理
+比如插入2条数据 A和B
+如果插入A成功，插入B不成功，则插入A 也不成功。这就是事务。
+```
+@Transactional
+public void insertTwo () {
+	// insert A
+	
+	// insert B
+}
+```
+注意 如果该方法只有一个任务 比如只插入数据A  A也可能不成功。廖师兄建议，只要不是查询，都要应用事务。
