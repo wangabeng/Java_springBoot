@@ -557,3 +557,6 @@ https://www.jianshu.com/p/470de10b9eec
 
 # spring boot统一错误处理
 http://how2j.cn/k/springboot/springboot-error/1643.html#nowhere
+
+# springboot集成ueditor富文本编辑器（不需修改ueditor源码）
+https://www.jianshu.com/p/006e65711de0
