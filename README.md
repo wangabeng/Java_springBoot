@@ -554,3 +554,6 @@ Spring Boot 过滤器的实现  https://cloud.tencent.com/developer/article/1362
 # spring boot设置跨域请求
 https://www.cnblogs.com/yuansc/p/9076604.html
 https://www.jianshu.com/p/470de10b9eec
+
+# spring boot统一错误处理
+http://how2j.cn/k/springboot/springboot-error/1643.html#nowhere
