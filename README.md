@@ -573,3 +573,146 @@ public void insertTwo () {
 }
 ```
 注意 如果该方法只有一个任务 比如只插入数据A  A也可能不成功。廖师兄建议，只要不是查询，都要应用事务。
+
+# springboot整合redis进行数据操作(推荐)
+https://www.jb51.net/article/125758.htm
+redis是一种常见的nosql，日常开发中，我们使用它的频率比较高，因为它的多种数据接口，很多场景中我们都可以用到，并且redis对分布式这块做的非常好。
+
+springboot整合redis比较简单，并且使用redistemplate可以让我们更加方便的对数据进行操作。
+### 1、添加依赖
+```
+<dependency> 
+<groupId>org.springframework.boot</groupId> 
+<artifactId>spring-boot-starter-data-redis</artifactId> 
+</dependency>
+```
+### 2、在application.properties中加入相关配置
+```
+spring.redis.database=0
+spring.redis.host=127.0.0.1
+spring.redis.port=6379
+spring.redis.password= 
+spring.redis.pool.max-idle=8
+spring.redis.pool.min-idle=0
+spring.redis.pool.max-active=8
+spring.redis.pool.max-wait=-1
+spring.redis.timeout=5000
+```
+### 3、编写配置类
+```
+import org.springframework.cache.CacheManager; 
+import org.springframework.cache.annotation.EnableCaching; 
+import org.springframework.context.annotation.Bean; 
+import org.springframework.context.annotation.Configuration; 
+import org.springframework.data.redis.cache.RedisCacheManager; 
+import org.springframework.data.redis.connection.RedisConnectionFactory; 
+import org.springframework.data.redis.core.RedisTemplate; 
+import org.springframework.data.redis.core.StringRedisTemplate; 
+@Configuration
+@EnableCaching
+public class RedisConfig { 
+  @Bean
+  public CacheManager cacheManager(RedisTemplate<?,?> redisTemplate) { 
+   CacheManager cacheManager = new RedisCacheManager(redisTemplate); 
+   return cacheManager; 
+  } 
+  @Bean
+  public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory factory) { 
+   RedisTemplate<String, Object> redisTemplate = new RedisTemplate<String, Object>(); 
+   redisTemplate.setConnectionFactory(factory); 
+   return redisTemplate; 
+  } 
+  @Bean
+  public StringRedisTemplate stringRedisTemplate(RedisConnectionFactory factory) { 
+   StringRedisTemplate stringRedisTemplate = new StringRedisTemplate(); 
+   stringRedisTemplate.setConnectionFactory(factory); 
+   return stringRedisTemplate; 
+  } 
+}
+```
+这里定义了两个bean，一个是redisTemplate，另一个是stringRedisTemplate，它们的序列化方式不同，前者默认jdk序列方式，后者默认string的序列化方式，后者一般专门用于存储string格式，前者我们可以用来保存对象等，这里我们都配置上，根据不同业务进行不同使用。
+### 4、编写实体类
+```
+public class User implements Serializable{ 
+ /** 
+  * 
+  */
+ private static final long serialVersionUID = 3221700752972709820L; 
+ private int id; 
+ private String name; 
+ private int age; 
+ public int getId() { 
+  return id; 
+ } 
+ public void setId(int id) { 
+  this.id = id; 
+ } 
+ public String getName() { 
+  return name; 
+ } 
+ public void setName(String name) { 
+  this.name = name; 
+ } 
+ public int getAge() { 
+  return age; 
+ } 
+ public void setAge(int age) { 
+  this.age = age; 
+ } 
+ public User(int id, String name, int age) { 
+  super(); 
+  this.id = id; 
+  this.name = name; 
+  this.age = age; 
+ } 
+}
+```
+### 5、编写测试service
+```
+@Service
+public class UserService { 
+ @Autowired
+ private StringRedisTemplate stringRedisTemplate; 
+ @Autowired
+ private RedisTemplate<String, Object> redisTemplate; 
+ public void set(String key, User user) { 
+  redisTemplate.opsForValue().set(key, user); 
+ } 
+ public User get(String key) { 
+  return (User) redisTemplate.boundValueOps(key).get(); 
+ } 
+ public void setCode(String key, String code) { 
+  stringRedisTemplate.opsForValue().set(key, code, 60, TimeUnit.SECONDS); 
+ } 
+ public String getCode(String key) { 
+  return stringRedisTemplate.boundValueOps(key).get(); 
+ } 
+}
+```
+这里我们模拟两种操作，一种是根据key存储user对象，另一种是存储key value均为string的操作，并且赋予数据过期时间，这种操作我们可以用于验证码存储，在setcode方法中，我们存储了一个有效时长为60s的数据，当60s过后，数据会自动销毁。
+### 6、编写测试controller访问
+```
+@RestController
+@RequestMapping("rest_redis") 
+public class RedisController { 
+ @Resource
+ private UserService userService; 
+ @GetMapping("set") 
+ public void set() { 
+  userService.set("key1", new User(1, "meepoguan", 26)); 
+ } 
+ @GetMapping("get") 
+ public String get() { 
+  return userService.get("key1").getName(); 
+ } 
+ @GetMapping("stringset") 
+ public void stringset() { 
+  userService.setCode("stringkey", "meepoguan_coke"); 
+ } 
+ @GetMapping("stringget") 
+ public String stringget() { 
+  return userService.getCode("stringkey"); 
+ } 
+}
+```
+对service中的方法进行测试。  
