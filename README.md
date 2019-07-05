@@ -821,6 +821,6 @@ false ，如＠Autowired(required=false）：如果想使用名称装配，那�
 private AyUserRepos tory ayUserRepository; 
 ```
 
-# spring boot 整合JPA 这篇清晰
+# spring boot 整合JPA 这篇很清晰
 https://www.cnblogs.com/sam-uncle/p/8819478.html  
 
