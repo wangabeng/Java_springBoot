@@ -997,3 +997,6 @@ public class UserController {
 ### 7 测试，页面以json格式显示数据库值  
 浏览器输入 locahost:8080/test/getuser/1  
 输入一个用户json值
+
+# spring boot jpa最佳实践
+https://o7planning.org/en/11897/spring-boot-and-spring-data-jpa-tutorial
