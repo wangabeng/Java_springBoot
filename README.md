@@ -724,16 +724,26 @@ public class RedisController {
 	<groupid>org . springfrarnework . boot</groupid>
 	<artifactid>spring boot starter-data-jpa</art fact Id>
 </dependenc y> 
+
 ```
-### 2 在／src/main/java/com.example.demo
-repository 下开发一个 AyUserRepository 类， 这个类是个接口，定义的方法可以直接使用
+### 2 继承 JpaRepository 在／src/main/java/com.example.demo
+repository 下开发一个 AyUserRepository  这个类是个接口
 ```
-public interface AyUserRepos tory extends JpaRepository<AyUser, String>{
-  @Entity
-  @Table(name = "ay_user")
-  public class AyUser {
+public interface AyUserRepos tory extends JpaRepository<AyUser,
+String> {
+}
+```
+
+### 3  实体类
+与此同时，我们需要在 AyUser 实体类下添加@EEntity 和@EId 注解
+在 AyUser   
+```
+@Entity
+@Table(name = "ay_user")
+public class AyUser {
   @Id
   private String id;
+  
   private String name ;
   private String password ; 
 }
@@ -744,3 +754,68 @@ Entity 注解来进行声明
  @Table ：声明此对象映射到数据库的数据表。该注解不是必需的，如果没有，  
 系统就会使用默认值（实体的短类名）。  
 @Id ：指定表的主键  
+
+### 4 服务层
+#### 4.1 服务层接口AyUserService
+```
+public interface AyUserService {
+	AyUser findByid(String id);
+	List<AyUser> findAll();
+	AyUser save(AyUser ayUser} ;
+	vroid delete (String id} ; 
+}
+```
+#### 4.2 接口实现类AyUserServiceImp.java
+```
+@Service 
+public class AyUserServiceimpl implements AyUserService{
+	@Resource
+	private AyUserRepository ayUserRepository ;
+	
+	@Override
+	public AyUser findByid(String id){
+		return ayUserRepository.findOne (id);
+	}
+	
+	@Override
+	public List<AyUser> findAll () {
+		return ayUserRepository findById (id) . get () ;
+	}
+	
+	@Override
+	public AyUser save (AyUser ayUser ) {
+		return ayUserRepository . save(ayUser) ;
+	}
+	
+	@Override
+	public void delete (String id) {
+		ayUserRepository . deleteByid(id)
+	} ;
+}
+```
+@Service: Spring Boot 会自动扫描到＠Component 解的类，并把这些类纳入
+Spring 容器中管理， 也可是@Component 注解，只是＠Service注解更能
+表明该类是服务层类  
+@Component ：泛指纽件 当组件不好归 类的时候，我们可以使用这个注解进
+行标注  
+@Repository ：持久层组件 用于标注数据访问纽件，即 DAO 组件
+
+@Resource ：这个注解属于 J2EE ，默认按照名称进行装配，名称可 以通过
+name 属性进行指定。如果没有指 name属性， 当注解写在字段上时， 就默认
+认取字段名进行查找。如果注解写在 setter 方法上，就默认取属性名进行装配。
+当找不到与名称匹配的 bean 时，才按照类型进行装配 但需要注意的是，name 属性一旦指定，就只会按照名称进行装配 具体代码如下：  
+```
+@Resource(name =“ayUserRepository”)
+private AyUserRepository ayUserRepository; 
+```
+
+@Autowired ：这个注解 Spring ，默认按类型装配。默认情况下，要求
+依赖、对象必须存在，如果要允许 null 值，那么可以设直它的 required 属性为
+false ，如＠Autowired(required=false）：如果想使用名称装配，那么可以结合
+@Qualifier 注解使用 具体代码如下：
+```
+@Autowired
+@Qualifier (“ayUserRepository”)
+private AyUserRepos tory ayUserRepository; 
+```
+
