@@ -1000,3 +1000,6 @@ public class UserController {
 
 # spring boot jpa最佳实践
 https://o7planning.org/en/11897/spring-boot-and-spring-data-jpa-tutorial
+
+# spring boot jpa中mysql的语法详解
+https://www.kancloud.cn/cxr17618/springboot/428900
