@@ -765,7 +765,7 @@ public interface AyUserService {
 	vroid delete (String id} ; 
 }
 ```
-#### 4.2 接口实现类AyUserServiceImp.java
+#### 4.2 接口实现类AyUserServiceImpl.java
 ```
 @Service 
 public class AyUserServiceimpl implements AyUserService{
@@ -790,10 +790,10 @@ public class AyUserServiceimpl implements AyUserService{
 	@Override
 	public void delete (String id) {
 		ayUserRepository . deleteByid(id)
-	} ;
+	}
 }
 ```
-@Service: Spring Boot 会自动扫描到＠Component 解的类，并把这些类纳入
+@Service: Spring Boot 会自动扫描到＠Component 注解的类，并把这些类纳入
 Spring 容器中管理， 也可是@Component 注解，只是＠Service注解更能
 表明该类是服务层类  
 @Component ：泛指纽件 当组件不好归 类的时候，我们可以使用这个注解进
