@@ -718,6 +718,7 @@ public class RedisController {
 对service中的方法进行测试。  
 
 # 在Spring Boot中使用JPA
+参照 <<一步步学spring boot微服务项目实战>>
 ### 1 引入依赖  
 ```
 <dependency>
@@ -733,6 +734,7 @@ public interface AyUserRepos tory extends JpaRepository<AyUser,
 String> {
 }
 ```
+<AyUser,String>第一个是实体类 第二个是主键类型
 
 ### 3  实体类
 与此同时，我们需要在 AyUser 实体类下添加@EEntity 和@EId 注解
@@ -818,4 +820,7 @@ false ，如＠Autowired(required=false）：如果想使用名称装配，那�
 @Qualifier (“ayUserRepository”)
 private AyUserRepos tory ayUserRepository; 
 ```
+
+# spring boot 整合JPA 这篇清晰
+https://www.cnblogs.com/sam-uncle/p/8819478.html  
 
