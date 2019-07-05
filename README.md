@@ -718,4 +718,29 @@ public class RedisController {
 对service中的方法进行测试。  
 
 # 在Spring Boot中使用JPA
-https://blog.csdn.net/u012702547/article/details/53946440
+### 1 引入依赖  
+```
+<dependency>
+	<groupid>org . springfrarnework . boot</groupid>
+	<artifactid>spring boot starter-data-jpa</art fact Id>
+</dependenc y> 
+```
+### 2 在／src/main/java/com.example.demo
+repository 下开发一个 AyUserRepository 类， 这个类是个接口，定义的方法可以直接使用
+```
+public interface AyUserRepos tory extends JpaRepository<AyUser, String>{
+  @Entity
+  @Table(name = "ay_user")
+  public class AyUser {
+  @Id
+  private String id;
+  private String name ;
+  private String password ; 
+}
+
+```
+ @Entity ：每个持久化 POJO 类都是一个实体 Bean ，通过在类的定义中使用  
+Entity 注解来进行声明  
+ @Table ：声明此对象映射到数据库的数据表。该注解不是必需的，如果没有，  
+系统就会使用默认值（实体的短类名）。  
+@Id ：指定表的主键  
