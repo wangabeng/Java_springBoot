@@ -716,3 +716,6 @@ public class RedisController {
 }
 ```
 对service中的方法进行测试。  
+
+# 在Spring Boot中使用JPA
+https://blog.csdn.net/u012702547/article/details/53946440
