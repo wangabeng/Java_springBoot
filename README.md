@@ -1003,3 +1003,16 @@ https://o7planning.org/en/11897/spring-boot-and-spring-data-jpa-tutorial
 
 # spring boot jpa中mysql的语法详解
 https://www.kancloud.cn/cxr17618/springboot/428900
+
+# spring boot配置文件application.yml中的配置规范
+username: XXXXX中必须有空格 其他位置不能有空格 否则会报错
+```
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    username: XXXXX
+    password: XXXXX
+    url: jdbc:mysql://us-cdbr-iron-east-02.cleardb.net:3306/heroku_7f8XXXXX60249ef5?autoReconnect=true&useUnicode=true&characterEncoding=utf-8
+  jpa:
+    show-sql:true
+```
