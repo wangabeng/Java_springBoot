@@ -1018,6 +1018,28 @@ spring:
 ```
 # spring boot jpa中报错
 Caused by: org.hibernate.hql.internal.ast.QuerySyntaxException:  is not mapped  
-参考 https://javabeat.net/hibernate-querysyntaxexception/
-解决方案  
+参考 https://javabeat.net/hibernate-querysyntaxexception/  
+
 解决方案：查询中使用的表名不是真实数据库中的表名，它应该是实体类的名称。如果您尝试映射到数据库表并且实际实体类名称不同，则会抛出此错误。另请注意，查询字符串应具有实体类名称的确切大小写（大写或小写）才能正常工作。
+
+# spring boot jpa报错Caused by: org.hibernate.AnnotationException: No identifier specified for entity
+解决方案：https://stackoverflow.com/questions/26471534/no-data-type-for-node-org-hibernate-hql-internal-ast-tree-identnode-hql
+SQL queries use column names while HQL queries use Class properties. You're selecting artifact_id from Classification but the Classification class has no property named 'artifact_id'. To fix it, use the class property in your HQL.
+```
+SELECT artifactId FROM Classification
+```
+artifactId为类的属性名 Classification为类名非表名
+
+# spring boot jpa报错 java.lang.ClassCastException: java.lang.String cannot be cast to
+原因：
+jpa查询语句错误
+"select userId, userName, userPassword,userEmail from JpaUser where USER_ID =:userId"  
+改为 "from JpaUser where USER_ID =:userId"及可 why?
+
+```
+public interface  JpaUserRepository extends CrudRepository<JpaUser, Integer> {
+    @Query("select userId, userName, userPassword,userEmail from JpaUser where USER_ID =:userId")
+    public JpaUser getUser(@Param("userId") Integer userId);
+}
+
+```
