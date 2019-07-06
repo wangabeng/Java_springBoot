@@ -1043,3 +1043,21 @@ public interface  JpaUserRepository extends CrudRepository<JpaUser, Integer> {
 }
 
 ```
+# 以上的3个jpa报错 都是和数据库查询语句有关，所以必须加强jpa query即JPQL的学习
+https://www.baeldung.com/spring-data-jpa-query
+1 查询所有列form表where条件  
+```
+public interface  JpaUserRepository extends CrudRepository<JpaUser, Integer> {
+    @Query("select u from JpaUser u where u.userId =:userId")
+    public JpaUser getUser(@Param("userId") Integer userId);
+}
+```
+select u from JpaUser[这里要用实体类名] u where u.userId[这里要用实体类的属性名] =:userId[传入的参数]
+2 用JPQL中使用原生的sql语句
+```
+public interface  JpaUserRepository extends CrudRepository<JpaUser, Integer> {
+    @Query(value = "SELECT * FROM t_user u WHERE u.USER_ID =:userId", nativeQuery = true)
+    public JpaUser getUser(@Param("userId") Integer userId);
+}
+```
+value = "SELECT * FROM t_user【这里要用实际数据库的表名】 u WHERE u.USER_ID【这里要用实际表的字段名】 =:userId", nativeQuery = true
