@@ -1016,3 +1016,8 @@ spring:
   jpa:
     show-sql:true
 ```
+# spring boot jpa中报错
+Caused by: org.hibernate.hql.internal.ast.QuerySyntaxException:  is not mapped  
+参考 https://javabeat.net/hibernate-querysyntaxexception/
+解决方案  
+解决方案：查询中使用的表名不是真实数据库中的表名，它应该是实体类的名称。如果您尝试映射到数据库表并且实际实体类名称不同，则会抛出此错误。另请注意，查询字符串应具有实体类名称的确切大小写（大写或小写）才能正常工作。
