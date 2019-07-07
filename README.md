@@ -1061,3 +1061,14 @@ public interface  JpaUserRepository extends CrudRepository<JpaUser, Integer> {
 }
 ```
 value = "SELECT * FROM t_user【这里要用实际数据库的表名】 u WHERE u.USER_ID【这里要用实际表的字段名】 =:userId", nativeQuery = true
+
+# maven改为国内阿里镜像源方法
+1 在eclipse中 widow-属性 找到安装目录 打开安装目录下的conf文件夹 然后编辑settings.xml 在镜像设置里添加阿里镜像如下
+```
+<mirror> 
+  <id>alimaven</id> 
+  <name>aliyun maven</name> 
+  <url>http://maven.aliyun.com/nexus/content/groups/public/</url> 
+  <mirrorOf>central</mirrorOf> 
+</mirror> 
+```
