@@ -1072,3 +1072,10 @@ value = "SELECT * FROM t_user【这里要用实际数据库的表名】 u WHERE 
   <mirrorOf>central</mirrorOf> 
 </mirror> 
 ```
+2 把该setting文件拷贝到user下的.m2文件夹下 然后更新maven即可
+
+# springboot操作数据库时找不到findOne（id:1）方法
+https://blog.csdn.net/qq_32003379/article/details/83419280  
+```
+ProductCategory productCategory = repository.findById(new Integer(1)).get(); // 2.0后的写法findById(new Integer(1)).get()或findById(new Integer(1)).orElse(null)
+```
