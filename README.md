@@ -1079,3 +1079,75 @@ https://blog.csdn.net/qq_32003379/article/details/83419280
 ```
 ProductCategory productCategory = repository.findById(new Integer(1)).get(); // 2.0后的写法findById(new Integer(1)).get()或findById(new Integer(1)).orElse(null)
 ```
+# mysql查询有个连接查询，如何在spring boot jpa中映射一个连接查询的属性到实体类
+参考 https://vladmihalcea.com/how-to-map-calculated-properties-with-hibernate-generated-annotation/  
+How to map calculated properties with Hibernate @Generated annotation  
+方法1（作者建议非生产环境下使用）  
+```
+@Entity(name = "Hero")
+public class Hero {
+ 
+    @Id
+    private Long id;
+ 
+    private String firstName;
+ 
+    private String lastName;
+ 
+    private String middleName1;
+ 
+    private String middleName2;
+ 
+    private String middleName3;
+ 
+    private String middleName4;
+ 
+    private String middleName5;
+ 
+    @Generated( value = GenerationTime.ALWAYS )
+    @Column(columnDefinition =
+        "AS CONCAT(" +
+        "   COALESCE(firstName, ''), " +
+        "   COALESCE(' ' + middleName1, ''), " +
+        "   COALESCE(' ' + middleName2, ''), " +
+        "   COALESCE(' ' + middleName3, ''), " +
+        "   COALESCE(' ' + middleName4, ''), " +
+        "   COALESCE(' ' + middleName5, ''), " +
+        "   COALESCE(' ' + lastName, '') " +
+        ")")
+    private String fullName;
+ 
+    //Getters and setters omitted for brevity
+ 
+    public String getFullName() {
+        return fullName;
+    }
+}
+```
+The @Generated annotation is used to instruct Hibernate when the associated column value is calculated, and it can take two values:  
+
+INSERT – meaning that the column value is calculated at insert time  
+ALWAYS – meaning that the column value is calculated both at insert and update time  
+
+方法2 在创建表的时候增加一个concat字段  
+```
+CREATE TABLE Hero
+(
+  id BIGINT NOT NULL ,
+  firstName VARCHAR(255) ,
+  fullName AS CONCAT(COALESCE(firstName, ''),
+                     COALESCE(' ' + middleName1, ''),
+                     COALESCE(' ' + middleName2, ''),
+                     COALESCE(' ' + middleName3, ''),
+                     COALESCE(' ' + middleName4, ''),
+                     COALESCE(' ' + middleName5, ''),
+                     COALESCE(' ' + lastName, '')) ,
+  lastName VARCHAR(255) ,
+  middleName1 VARCHAR(255) ,
+  middleName2 VARCHAR(255) ,
+  middleName3 VARCHAR(255) ,
+  middleName4 VARCHAR(255) ,
+  middleName5 VARCHAR(255) ,
+  PRIMARY KEY ( id )
+)
+```
