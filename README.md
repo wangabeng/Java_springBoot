@@ -1151,3 +1151,34 @@ CREATE TABLE Hero
   PRIMARY KEY ( id )
 )
 ```
+
+# 插入数据时报错
+com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Table 'sell.hibernate_sequence' doesn't exist  
+https://www.cnblogs.com/yangyi9343/p/5807512.html
+```
+Hibernate 能够出色地自动生成主键。Hibernate/EBJ 3 注释也可以为主键的自动生成提供丰富的支持，允许实现各种策略。
+其生成规则由@GeneratedValue设定的.这里的@id和@GeneratedValue都是JPA的标准用法, JPA提供四种标准用法,由@GeneratedValue的源代码可以明显看出.
+JPA提供的四种标准用法为TABLE,SEQUENCE,IDENTITY,AUTO.
+TABLE：使用一个特定的数据库表格来保存主键。
+SEQUENCE：根据底层数据库的序列来生成主键，条件是数据库支持序列。
+IDENTITY：主键由数据库自动生成（主要是自动增长型）
+AUTO：主键由程序控制。
+在指定主键时，如果不指定主键生成策略，默认为AUTO。
+@Id
+相当于
+@Id
+@GeneratedValue(strategy = GenerationType.AUTO)
+ 
+identity:
+使用SQL Server 和 MySQL 的自增字段，这个方法不能放到 Oracle 中，Oracle 不支持自增字段，要设定sequence（MySQL 和 SQL Server 中很常用）。
+Oracle就要采用sequence了.
+ 
+同时,也可采用uuid,native等其它策略.(相关用法,上网查询)
+```
+```
+也就是说:
+
+auto:        当数据库中  不存在 这张表的时候可以用它建表的时候, 制定自增的方式,  存在的时候插入数据还用它就会出错了
+
+identity:     使用SQL Server 和 MySQL 的自增字段
+```
