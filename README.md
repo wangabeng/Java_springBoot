@@ -1188,3 +1188,6 @@ identity:     使用SQL Server 和 MySQL 的自增字段
 2.解决方法：在mysql配置文件 my.cnf  内加入 skip-name-resolve   保存 重启mysql  
 
  根据文档说明，如果你的mysql主机查询DNS很慢或是有很多客户端主机时会导致连接很慢，由于我们的开发机器是不能够连接外网的，所以DNS解析是不可能完成的，从而也就明白了为什么连接那么慢了。同时，请注意在增加该配置参数后，mysql的授权表中的host字段就不能够使用域名而只能够使用 ip地址了，因为这是禁止了域名解析的结果
+
+# 微信java支付demo
+https://www.cnblogs.com/wang-yaz/p/8632624.html
