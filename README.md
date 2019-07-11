@@ -1191,3 +1191,23 @@ identity:     使用SQL Server 和 MySQL 的自增字段
 
 # 微信java支付demo
 https://www.cnblogs.com/wang-yaz/p/8632624.html
+
+# springBoot jpa 分页
+1 jap中有自带的分页方法  
+在dao层中使用  
+```
+Page<LinkUrl> findAll(Pageable pageable);
+```  
+2 在controller层  
+```
+public List<LinkUrl>  getlinkList(int page,int size) {
+ 
+	Sort sort = new Sort(Sort.Direction.DESC, "id");
+	Pageable pageable = PageRequest.of(page,size,sort);
+	int totalElements = (int) datas.getTotalElements(); //总条数
+	int totalPages =  datas.getTotalPages(); // 总页数
+	List<LinkUrl> content = datas.getContent(); // 数据列表
+	return content;
+ }
+```
+
