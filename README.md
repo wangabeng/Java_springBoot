@@ -1210,4 +1210,9 @@ public List<LinkUrl>  getlinkList(int page,int size) {
 	return content;
  }
 ```
-
+# Arrays.asList(new Product()); // 生成一个数组，数组的第一个元素是json格式的Product实例
+坑： 曾经因为导包Arrays 导错，卡住了一天多时间。正确的包是：
+```
+import java.util.Arrays;
+```
+Arrays.asList(new Product(), new Product()) 则生成 [{},{}]
