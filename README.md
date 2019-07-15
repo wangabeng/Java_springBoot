@@ -1219,3 +1219,18 @@ Arrays.asList(new Product(), new Product()) 则生成 [{},{}]
 
 # Springboot中关于Beanutils.copyProperties( )的用法
 https://blog.csdn.net/qq_41603102/article/details/89470246
+
+# spring boot maven项目导入eclipse后 出现大量的报错 
+* cannot be resolved *  
+比如：
+org.springframework.test cannot be resolved also with maven dependency present
+解决办法:  
+```
+参考：https://stackoverflow.com/questions/13321400/org-springframework-test-cannot-be-resolved-also-with-maven-dependency-present
+<dependency>
+    <groupId>org.springframework</groupId>
+    <artifactId>spring-tx</artifactId>
+    <version>${org.springframework-version}</version>
+</dependency>
+```
+${org.springframework-version}是
