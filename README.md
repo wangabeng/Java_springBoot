@@ -1216,3 +1216,6 @@ public List<LinkUrl>  getlinkList(int page,int size) {
 import java.util.Arrays;
 ```
 Arrays.asList(new Product(), new Product()) 则生成 [{},{}]
+
+# Springboot中关于Beanutils.copyProperties( )的用法
+https://blog.csdn.net/qq_41603102/article/details/89470246
