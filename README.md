@@ -1221,16 +1221,22 @@ Arrays.asList(new Product(), new Product()) 则生成 [{},{}]
 https://blog.csdn.net/qq_41603102/article/details/89470246
 
 # spring boot maven项目导入eclipse后 出现大量的报错 
-* cannot be resolved *  
+* XXX cannot be resolved XXX *  
 比如：
 org.springframework.test cannot be resolved also with maven dependency present
-解决办法:  
+根本原因: 运行环境改变 导致一些包依赖找不到了   
+解决办法：
+查看导入报错的 语句
 ```
-参考：https://stackoverflow.com/questions/13321400/org-springframework-test-cannot-be-resolved-also-with-maven-dependency-present
+import org.hibernate.annotations.DynamicUpdate;
+```
+比如他报错，就重新在maven仓库中找到依赖，然后添加到pom文件中重新安装。
+```
+<!-- https://mvnrepository.com/artifact/org.eclipse.persistence/javax.persistence -->
 <dependency>
-    <groupId>org.springframework</groupId>
-    <artifactId>spring-tx</artifactId>
-    <version>${org.springframework-version}</version>
+	<groupId>org.eclipse.persistence</groupId>
+	<artifactId>javax.persistence</artifactId>
+	<version>2.2.0</version>
 </dependency>
 ```
-${org.springframework-version}是
+逐条补救。
