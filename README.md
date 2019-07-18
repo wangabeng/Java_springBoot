@@ -1240,3 +1240,11 @@ import org.hibernate.annotations.DynamicUpdate;
 </dependency>
 ```
 逐条补救。
+比如：无法继承 JpaRepository,不识别 JpaRepository 则需要导入 spring-data-jpa  
+```
+<dependency>
+	<groupId>org.springframework.data</groupId>
+	<artifactId>spring-data-jpa</artifactId>
+
+</dependency>
+```
