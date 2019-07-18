@@ -1248,3 +1248,8 @@ import org.hibernate.annotations.DynamicUpdate;
 
 </dependency>
 ```
+测试类中用@SpringBootTest注解遇到问题： SpringBootTest cannot be resolved to a type  
+问题描述： 在src/main/java中引用@SpringBootTest注解报错，而在src/main/test中引用@SpringBootTest正常，需要在设置中修改  
+```
+build path - source -下的文件夹中 如果是灰色，表示可以使用SpringBootTest注解，如果不是灰色，说明不可以用。在不可用的文件夹最后一个选项contains test sources下双击切换为yes，然后保存即可。
+```
