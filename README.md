@@ -1253,3 +1253,4 @@ import org.hibernate.annotations.DynamicUpdate;
 ```
 build path - source -下的文件夹中 如果是灰色，表示可以使用SpringBootTest注解，如果不是灰色，说明不可以用。在不可用的文件夹最后一个选项contains test sources下双击切换为yes，然后保存即可。
 ```
+### 这个问题卡了好几天，重新导入其他的maven工程，报错原因主要是因为在src/main/java中使用了junit测试，如果在src/main/test中测试，就不会报错。解决方法是在eclipse中 build-path中souce选项下contains test sources下双击切换为yes，然后不用添加任何额外的依赖了。
