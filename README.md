@@ -1257,3 +1257,5 @@ build path - source -下的文件夹中 如果是灰色，表示可以使用Spri
 
 # springboot统一异常处理
 https://blog.csdn.net/qq_33223299/article/details/90717215
+这个更好  
+https://www.jianshu.com/p/accec85b4039
