@@ -1259,3 +1259,15 @@ build path - source -下的文件夹中 如果是灰色，表示可以使用Spri
 https://blog.csdn.net/qq_33223299/article/details/90717215
 这个更好  
 https://www.jianshu.com/p/accec85b4039
+
+# VO DTO区别
+```
+VO（value object）
+用于返回给前端交互。传给前端的对象被称作VO（web层）。也就是前端调用你restful接口你返回的对象。
+
+DTO（Data Transfer Object）
+用于业务层（biz层）的处理
+
+一般来说的流程就是
+从数据库中取出的对象，比如是data ，那么就先需要转换成dataDTO处理数据。然后返回到restful前转换成需要的VO
+```
