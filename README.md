@@ -1271,3 +1271,26 @@ DTO（Data Transfer Object）
 一般来说的流程就是
 从数据库中取出的对象，比如是data ，那么就先需要转换成dataDTO处理数据。然后返回到restful前转换成需要的VO
 ```
+
+# 自动注入实体entity报错  
+比如
+```
+ @Autowired 
+ private OrderMaster orderMaster;
+```
+
+```
+Description:
+
+Field orderMaster in com.immoc.sell.service.impl.OrderServiceImpl required a bean of type 'com.immoc.sell.dataobject.OrderMaster' that could not be found.
+
+
+Action:
+
+Consider defining a bean of type 'com.immoc.sell.dataobject.OrderMaster' in your configuration.
+
+```
+出错原因：entity实体类只能通过手工导入，用new来创建，不可以通过 @Autowired private OrderMaster orderMaster创建，否则会出现以上的报错。
+
+# service的接口类和实现类，都要加@Service注解
+ 
