@@ -1257,7 +1257,7 @@ build path - source -下的文件夹中 如果是灰色，表示可以使用Spri
 
 # springboot统一异常处理
 干货  
-http://tengj.top/2018/05/16/springboot13/
+https://www.jianshu.com/p/accec85b4039
 
 # VO DTO区别
 ```
