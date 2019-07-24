@@ -1257,7 +1257,9 @@ build path - source -下的文件夹中 如果是灰色，表示可以使用Spri
 
 # springboot统一异常处理
 干货  
-https://www.jianshu.com/p/accec85b4039
+https://www.jianshu.com/p/accec85b4039  
+已经测试过（参见Java_SpringBoot_Mybatis_MySql）  
+http://www.imooc.com/article/260354
 
 # VO DTO区别
 ```
