@@ -1294,4 +1294,8 @@ Consider defining a bean of type 'com.immoc.sell.dataobject.OrderMaster' in your
 # service的接口类和实现类，都要加@Service注解
  
 # 插入数据库报错 1062 Dylicate entry "xxx" for key "PRIMARY KEY"
-报错原因，PRRIMARY KEY 必须唯一， 就是说一旦列设置为主键，默认就是unique唯一的
+报错原因，PRRIMARY KEY 必须唯一， 就是说一旦列设置为主键，默认就是unique唯一的  
+见sell  
+```
+orderDetail.setDetailId(orderId); // 如果这样写，oder_detail表的主键primary key为detail_id, 如果一次主订单购买2个产品，就会产生2条订单详情记录，这两条order_detail记录的order_id是for循环外生成的，如果orderDetail.setDetailId(orderId)设置的detail_id也用这个for循环外层生成的orderId，就会因为主键冲突，导致无法同时插入这两条数据
+```
