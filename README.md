@@ -1293,3 +1293,5 @@ Consider defining a bean of type 'com.immoc.sell.dataobject.OrderMaster' in your
 
 # service的接口类和实现类，都要加@Service注解
  
+# 插入数据库报错 1062 Dylicate entry "xxx" for key "PRIMARY KEY"
+报错原因，PRRIMARY KEY 必须唯一， 就是说一旦列设置为主键，默认就是unique唯一的
