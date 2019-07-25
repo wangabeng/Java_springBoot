@@ -222,6 +222,7 @@ public class Springboot0610Application {
 ```
 
 # springboot 文件上传例子
+### 前后端不分离
 https://o7planning.org/en/11679/spring-boot-file-upload-example 
 @ModelAttribute使用详解  
 https://blog.csdn.net/li_xiao_ming/article/details/8349115  
@@ -316,7 +317,8 @@ public class GreetingController {
 </body>
 </html>
 ```
-
+### 前后端分离的文件上传
+https://blog.csdn.net/oppo5630/article/details/79318715
 
 
 # OKHttp中设置请求头 类似postman中发送get请求 带authorization认证
