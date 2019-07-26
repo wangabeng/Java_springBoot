@@ -320,6 +320,9 @@ public class GreetingController {
 ### 前后端分离的文件上传
 https://blog.csdn.net/oppo5630/article/details/79318715
 
+### 前后端分类SpringBoot实现表单数据与文件同时上传
+https://blog.csdn.net/qq_30401609/article/details/82384766
+
 
 # OKHttp中设置请求头 类似postman中发送get请求 带authorization认证
 参考 https://www.jianshu.com/p/cdab05b87a9d  
