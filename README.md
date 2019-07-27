@@ -1404,3 +1404,6 @@ orderDetail.setDetailId(orderId); // 如果这样写，oder_detail表的主键pr
 
 # SpringBoot2.0集成WebSocket，实现后台向前端推送信息
 https://blog.csdn.net/moshowgame/article/details/80275084
+
+# 表单验证 
+https://my.oschina.net/u/1584624/blog/912800
