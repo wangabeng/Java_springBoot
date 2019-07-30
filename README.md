@@ -1410,3 +1410,52 @@ https://my.oschina.net/u/1584624/blog/912800
 
 # Gjson详解
 https://www.cnblogs.com/ryq2014/p/9258790.html
+
+# SpringBoot2.1.3修改tomcat参数支持请求特殊符号问题
+异常一：  
+    Invalid character found in method name. HTTP method names must be token  
+原因： 
+   产生这个问题的原因是页面表单提交了大量的数据，而这些数据量可能超过了Tomcat 定义的Header头内容，那么很好解决了，只要设置一下Tomcat的maxHttpHeaderSize  
+
+ 解决问题如下：
+```
+server:
+  address: 0.0.0.0
+  port: 8080
+  max-http-header-size: 10240000
+  tomcat:
+    max-http-header-size: 10240000
+    max-http-post-size: 10240000     
+
+```
+ 异常二：  
+
+        Invalid character found in the request target. The valid characters are defined in RFC 7230 and RFC 3986  
+原因：  
+     SpringBoot 2.0.0 以上都采用内置tomcat8.0以上版本，而tomcat8.0以上版本遵从RFC规范添加了对Url的特殊字符的限制，url中只允许包含英文字母(a-zA-Z)、数字(0-9)、-_.~四个特殊字符以及保留字符( ! * ’ ( ) ; : @ & = + $ , / ? # [ ] ) (26*2+10+4+18=84)这84个字符,请求中出现了{}大括号或者[],所以tomcat报错。设置RelaxedQueryChars允许此字符(建议)，设置requestTargetAllows选项(Tomcat 8.5中不推荐)。您可以降级为旧版本之一(不推荐-安全性)。根据 https://tomcat.apache.org/tomcat-8.5-doc/config/systemprops.html, requestTargetAllowis设置允许不受欢迎字符。对我来说，这里提出的其他解决办法也不起作用。根据Tomcat文档，我找到了一种方法来设置松弛的QueryChars属性
+
+ 解决问题如下：
+ 最近遇到一个问题，比如GET请求中，key,value中带有特殊符号，请求会报错，见如下URL：
+
+http://xxx.xxx.xxx:8081/aaa?key1=val1&a.[].id=123&b=a[1]
+
+现在，我们进入boot启动类，添加如下代码即可：  
+```
+public class DemoApp {
+  public static void main(String[] args) {
+      SpringApplication.run(DemoApp.class, args);
+  }
+  @Bean
+  public TomcatServletWebServerFactory webServerFactory() {
+     TomcatServletWebServerFactory factory = new TomcatServletWebServerFactory();
+     factory.addConnectorCustomizers(new TomcatConnectorCustomizer() {
+              @Override
+              public void customize(Connector connector) {
+                  connector.setProperty("relaxedPathChars", "\"<>[\\]^`{|}");
+                  connector.setProperty("relaxedQueryChars", "\"<>[\\]^`{|}");
+               }
+      });
+      return factory;
+  }
+}
+```
