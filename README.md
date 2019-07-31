@@ -1459,3 +1459,11 @@ public class DemoApp {
   }
 }
 ```
+# 使用Eclipse调试Spring boot项目时总是直接进入SilentExitExceptionHandler
+最近在使用Eclipse调试Spring boot工程的时候，总是会直接进入SilentExitExceptionHandler中，无法正常的debug，严重影响效率，在博客上看到了别人的参考方案，在此记忆一下，方便查看。
+
+解决方案：Window-->Preference-->java-->debug-->Suspend execution on uncaught exceptions选项前面的勾去掉
+
+再次进行Debug测试时，发现可以了。
+
+参考的博客地址：https://www.cnblogs.com/EasonJim/p/8135332.html 表示感谢。
