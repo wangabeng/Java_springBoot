@@ -1464,6 +1464,8 @@ public class DemoApp {
 
 解决方案：Window-->Preference-->java-->debug-->Suspend execution on uncaught exceptions选项前面的勾去掉
 
+然后在主类文件上右键 - debug as - java appliation
+
 再次进行Debug测试时，发现可以了。
 
 参考的博客地址：https://www.cnblogs.com/EasonJim/p/8135332.html 表示感谢。
