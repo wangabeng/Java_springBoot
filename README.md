@@ -1527,3 +1527,5 @@ public class JacksonConfig {
     }  
 }  
 ```
+# spring boot中 jpa的使用 自定义查询 比如联合查询
+https://www.jianshu.com/p/c14640b63653
