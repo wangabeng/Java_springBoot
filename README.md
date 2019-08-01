@@ -1493,6 +1493,7 @@ spring:
 Java代码  收藏代码
 @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd")  
 ```
+注：格式转化只有在以rest格式以json格式输出到前端有效，就是说只有在前端发送请求后，在收到的json数据上才能显示为转换后的格式，如果在调试或测试时，在eclipse中debug查看，时间格式仍然为原始的，不会转换。  
 
 二、 使用 @ResponseBody 时 忽略 json 中值为null的属性  
 ```
