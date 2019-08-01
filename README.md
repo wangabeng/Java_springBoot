@@ -1508,7 +1508,7 @@ String dateString = formatter.format(orderDTO.getCreateTime()); // orderDTO.getC
 @JsonInclude(JsonInclude.Include.NON_NULL)//该注解配合jackson，序列化时忽略 null属性 
 ```
 
-三、 使用 @ResponseBody 时 将 json 中值为null的转换成空字符串  
+三、 使用 @ResponseBody 时 将 json 中值为null的转换成空字符串或[] {}  
 ```
 @Configuration  
 public class JacksonConfig {  
