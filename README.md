@@ -1469,3 +1469,52 @@ public class DemoApp {
 再次进行Debug测试时，发现可以了。
 
 参考的博客地址：https://www.cnblogs.com/EasonJim/p/8135332.html 表示感谢。
+
+
+# Spring Boot json （Date类型入参、格式化，以及如何处理null）
+一、 使用 @ResponseBody @RequestBody， Date 类型对象入参，返回json格式化  
+解决方法如下
+```
+1. application.yml中加入如下代码
+ 
+
+Yml代码  收藏代码
+spring:  
+  jackson:  
+    date-format: yyyy-MM-dd HH:mm:ss  
+    time-zone: GMT+8  
+ 
+
+ 
+
+2. 如果个别实体需要使用其他格式的 pattern，在实体上加入注解即可
+ 
+
+Java代码  收藏代码
+@JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd")  
+```
+
+二、 使用 @ResponseBody 时 忽略 json 中值为null的属性  
+```
+@JsonInclude(JsonInclude.Include.NON_NULL)//该注解配合jackson，序列化时忽略 null属性 
+```
+
+三、 使用 @ResponseBody 时 将 json 中值为null的转换成空字符串  
+```
+@Configuration  
+public class JacksonConfig {  
+    @Bean  
+    @Primary  
+    @ConditionalOnMissingBean(ObjectMapper.class)  
+    public ObjectMapper jacksonObjectMapper(Jackson2ObjectMapperBuilder builder) {  
+        ObjectMapper objectMapper = builder.createXmlMapper(false).build();  
+        objectMapper.getSerializerProvider().setNullValueSerializer(new JsonSerializer<Object>() {  
+            @Override  
+            public void serialize(Object o, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException, JsonProcessingException {  
+                jsonGenerator.writeString("");  
+            }  
+        });  
+        return objectMapper;  
+    }  
+}  
+```
