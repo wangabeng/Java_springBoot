@@ -1560,3 +1560,6 @@ https://www.jianshu.com/p/c14640b63653
 如果不成功
 1 执行maven- update project   
 2 进入build path -  source - contains test sources 改为yes 
+
+# springboot打包
+https://juejin.im/post/5989cb25f265da3e0e105cbf
