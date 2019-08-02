@@ -1558,8 +1558,9 @@ https://www.jianshu.com/p/c14640b63653
 </configuration>
 ```
 如果不成功
-1 执行maven- update project   
-2 进入build path -  source - contains test sources 改为yes 
+1 mvn clean  
+2 执行maven- update project（然后不要再clean了 直接执行第三步）   
+3 进入build path -  source - contains test sources 改为yes 
 
 # springboot打包
 https://juejin.im/post/5989cb25f265da3e0e105cbf
