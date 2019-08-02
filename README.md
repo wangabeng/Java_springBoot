@@ -1564,3 +1564,30 @@ https://www.jianshu.com/p/c14640b63653
 
 # springboot打包
 https://juejin.im/post/5989cb25f265da3e0e105cbf
+
+# springboot项目打包webapp和resources文件夹
+```
+<build>
+    <resources>
+        <resource>
+            <directory>src/main/resources</directory>
+	        <includes>
+	            <include>**/**</include>
+	        </includes>
+            <!-- 开启过滤，用指定的参数替换directory下的文件中的参数 -->
+	        <filtering>true</filtering>
+	    </resource>
+            
+        <resource>
+            <directory>src/main/webapp</directory>
+            <targetPath>META-INF/resources</targetPath>
+            <includes>
+                <include>**/**</include>
+            </includes>
+        </resource>
+         
+    </resources>
+ 
+</build>
+
+```
