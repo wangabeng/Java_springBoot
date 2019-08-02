@@ -1530,7 +1530,7 @@ public class JacksonConfig {
 # spring boot中 jpa的使用 自定义查询 比如联合查询
 https://www.jianshu.com/p/c14640b63653
 
-# eclipse运行HelloWorld程序，显示 错误：找不到或无法加载主类  
+# eclipse运行程序，显示 错误：找不到或无法加载主类  
 1 执行maven- update project  
 2 进入build path -  source - contains test sources 改为yes
 
@@ -1557,3 +1557,6 @@ https://www.jianshu.com/p/c14640b63653
 	<classifier>execute</classifier>
 </configuration>
 ```
+如果不成功
+1 执行maven- update project   
+2 进入build path -  source - contains test sources 改为yes 
