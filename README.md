@@ -1533,3 +1533,27 @@ https://www.jianshu.com/p/c14640b63653
 # eclipse运行HelloWorld程序，显示 错误：找不到或无法加载主类  
 1 执行maven- update project  
 2 进入build path -  source - contains test sources 改为yes
+
+# spring boot 打包 程序包不存在 解决办法
+在pom文件中添加一个配置
+```
+<build>
+	<plugins>
+
+		<plugin>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-maven-plugin</artifactId>
+			<!-- 这块一定要配置否则打jar的时候会说找不 到主类 -->
+			<configuration>
+				<classifier>execute</classifier>
+			</configuration>
+		</plugin>
+	</plugins>
+</build>
+```
+
+```
+<configuration>
+	<classifier>execute</classifier>
+</configuration>
+```
