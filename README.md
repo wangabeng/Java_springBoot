@@ -1596,3 +1596,6 @@ https://blog.csdn.net/qq_31673689/article/details/79461862
 
 # java socket通信实例
 原生 https://www.cnblogs.com/coder-wzr/p/7838553.html
+
+# springboot socket通信
+https://www.cnblogs.com/bianzy/p/5822426.html
