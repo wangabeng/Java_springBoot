@@ -1593,3 +1593,6 @@ https://juejin.im/post/5989cb25f265da3e0e105cbf
 ```
 # spring-boot 统计实时在线人数
 https://blog.csdn.net/qq_31673689/article/details/79461862
+
+# java socket通信实例
+原生 https://www.cnblogs.com/coder-wzr/p/7838553.html
