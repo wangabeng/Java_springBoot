@@ -1599,3 +1599,17 @@ https://blog.csdn.net/qq_31673689/article/details/79461862
 
 # springboot socket通信
 https://www.cnblogs.com/bianzy/p/5822426.html
+
+# Java如何获取JSON数据中的值
+https://www.cnblogs.com/Shanghai-vame/p/10009333.html
+```
+        JSONObject object = (JSONObject) JSONObject.parse(str);
+        System.out.println(object.getJSONObject("testsetTestcaseExecute").get("auditor"));
+        System.out.println(object.getJSONObject("testsetTestcaseExecute").get("testcaseType"));
+```
+```
+{"testsetTestcaseExecute":{"auditor":"vame","testcaseType":"Exception"}}
+
+vame
+Exception
+```
