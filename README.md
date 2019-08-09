@@ -1613,3 +1613,5 @@ https://www.cnblogs.com/Shanghai-vame/p/10009333.html
 vame
 Exception
 ```
+# java在微信公众号中获取openid及用户信息
+https://blog.csdn.net/qq_36095679/article/details/93327620
