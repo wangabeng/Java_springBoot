@@ -1614,4 +1614,7 @@ vame
 Exception
 ```
 # java在微信公众号中获取openid及用户信息
+标注版 包括使用原生方法和sdk方法
 https://blog.csdn.net/qq_36095679/article/details/93327620
+简单版 使用sdk方法
+https://blog.csdn.net/antma/article/details/79629584
