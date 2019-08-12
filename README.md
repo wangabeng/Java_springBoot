@@ -1618,3 +1618,27 @@ Exception
 https://blog.csdn.net/qq_36095679/article/details/93327620
 简单版 使用sdk方法
 https://blog.csdn.net/antma/article/details/79629584
+
+# 10行代码搞定微信支付(Java版)
+https://www.imooc.com/article/19238
+核心代码：
+```
+//微信公众账号支付配置
+WxPayH5Config wxPayH5Config = new WxPayH5Config();
+wxPayH5Config.setAppId("xxxxx");
+wxPayH5Config.setAppSecret("xxxxxxxx");
+wxPayH5Config.setMchId("xxxxxx");
+wxPayH5Config.setMchKey("xxxxxxx");
+wxPayH5Config.setNotifyUrl("http://xxxxx");
+
+//支付类, 所有方法都在这个类里
+BestPayServiceImpl bestPayService = new BestPayServiceImpl();
+bestPayService.setWxPayH5Config(wxPayH5Config);
+
+//发起支付
+bestPayService.pay();
+
+//异步回调
+bestPayService.asyncNotify();
+
+```
