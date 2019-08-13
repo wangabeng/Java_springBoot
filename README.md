@@ -1642,3 +1642,5 @@ bestPayService.pay();
 bestPayService.asyncNotify();
 
 ```
+# gson使用详解
+https://www.jianshu.com/p/fcb4f1ad4743?utm_campaign=maleskine&utm_content=note&utm_medium=seo_notes&utm_source=recommendation
