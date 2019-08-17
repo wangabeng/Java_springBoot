@@ -1649,3 +1649,6 @@ https://www.jianshu.com/p/fcb4f1ad4743?utm_campaign=maleskine&utm_content=note&u
 【Socket】Java Socket编程基础及深入讲解
 https://blog.csdn.net/a78270528/article/details/80318571
 https://www.cnblogs.com/yiwangzhibujian/p/7107785.html
+
+# Java比较浮点数的正确方式
+https://www.jianshu.com/p/4679618fd28c
