@@ -1652,3 +1652,6 @@ https://www.cnblogs.com/yiwangzhibujian/p/7107785.html
 
 # Java比较浮点数的正确方式
 https://www.jianshu.com/p/4679618fd28c
+
+# cookie session经典介绍
+https://www.cnblogs.com/lonelydreamer/p/6169469.html
