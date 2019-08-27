@@ -1650,6 +1650,9 @@ https://www.jianshu.com/p/fcb4f1ad4743?utm_campaign=maleskine&utm_content=note&u
 https://blog.csdn.net/a78270528/article/details/80318571
 https://www.cnblogs.com/yiwangzhibujian/p/7107785.html
 
+配合html聊天室案例
+https://blog.battcn.com/2018/06/27/springboot/v2-other-websocket/
+
 # Java比较浮点数的正确方式
 https://www.jianshu.com/p/4679618fd28c
 
