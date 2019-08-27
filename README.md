@@ -1658,3 +1658,99 @@ https://www.jianshu.com/p/4679618fd28c
 
 # cookie session经典介绍
 https://www.cnblogs.com/lonelydreamer/p/6169469.html
+
+# AOP的简单应用
+1 引入依赖
+```
+		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-aop -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-aop</artifactId>
+			<version>2.1.6.RELEASE</version>
+		</dependency>
+```
+2 定义一个controller
+```
+package com.ui.toto.toto.web;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.ui.toto.toto.enums.MessageEnum;
+import com.ui.toto.toto.exception.UserException;
+
+@RestController
+public class MainController {
+	@RequestMapping(value = "/index")
+	String home(HttpServletRequest request) {
+		/*
+		 * int a = 4 / 0; return "Hello World!";
+		 */
+		// 抛出UserException异常  把枚举对象作为参数传出去
+		// throw new UserException(MessageEnum.NAME_EXCEEDED_CHARRACTER_LIMIT);
+		// return null;
+		HttpSession sessoin = request.getSession();//这就是session的创建
+		
+		System.out.println(sessoin.getAttribute("sessionId"));
+		sessoin.setAttribute("sessionId","wangabeng");
+		
+		return "good";
+	}
+	
+	@RequestMapping(value = "/aoptest")
+	String aoptest() {
+		System.out.println(1/0);
+		return "aoptest";
+	}
+}
+```
+3 定义切面及切点
+```
+package com.ui.toto.toto.aop;
+
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.After;
+import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.stereotype.Component;
+
+// 定义切面
+@Aspect
+@Component
+public class WebAspect {
+	// 定义切片
+	@Pointcut("execution(* com.ui.toto.toto.web.MainController.aoptest(..))")
+	public void web () {
+		System.out.println("do sth");
+	}
+	
+	//前置通知
+	@Before("web()")
+	public void beforeExcution(JoinPoint joinPoint) {
+		System.out.println("前置通知");
+		System.out.println("Before");
+	}
+	
+	@After("web()")
+	public void doAfter(JoinPoint joinPoint) {
+		System.out.println("After");
+	}
+	
+	@AfterReturning("web()")
+	public void doAfterReturning(JoinPoint joinPoint) {
+		System.out.println("doAfterReturning");
+	}
+	
+	@org.aspectj.lang.annotation.AfterThrowing("web()")
+	public void AfterThrowing() {
+		System.out.println("doAfterReturning");
+	}
+	
+}
+
+```
