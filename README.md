@@ -1754,3 +1754,5 @@ public class WebAspect {
 }
 
 ```
+# Redis就这一篇！
+https://www.jianshu.com/p/56999f2b8e3b
