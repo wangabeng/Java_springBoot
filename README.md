@@ -1756,3 +1756,29 @@ public class WebAspect {
 ```
 # Redis就这一篇！
 https://www.jianshu.com/p/56999f2b8e3b
+
+# 使用wangeditor上传至springboot
+https://blog.csdn.net/moshowgame/article/details/83099562
+
+# springboot设置跨域请求
+
+```
+//跨域请求
+@CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
+@RestController
+public class MainController {
+	
+	@RequestMapping(value = "/aoptest")
+	String aoptest() {
+		System.out.println(1/0);
+		return "aoptest";
+	}
+
+	@RequestMapping(value = "/test")
+	void test(MultipartFile file, HttpServletRequest request) {
+		System.out.println("有人访问我了");
+		System.out.println(file.getOriginalFilename());
+	}
+}
+
+```
