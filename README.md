@@ -1785,6 +1785,33 @@ public class MainController {
 
 # springboot 添加附件图片到static下，结果报404，需去给项目刷新 前端才可以回显
 参考 https://ask.csdn.net/questions/679141
-解决办法：
-第一种：把图片存放在本地其他的路径（非项目路径）；
-第二种:使用图片服务器，图片服务器有本地和云两种形式，云的话推荐使用七牛云这个平台，本地的话推荐使用fastdfs系统
+解决办法：  
+第一种：把图片存放在本地其他的路径（非项目路径）；  
+第二种:使用图片服务器，图片服务器有本地和云两种形式，云的话推荐使用七牛云这个平台，本地的话推荐使用fastdfs系统  
+第三种：  
+1 增加一个配置文件
+配置访问虚拟路径  
+文件实际是存在e盘的path路径下面，但是当访问http://ip:port/upload/xxx.jpg时，虚拟路径会映射到file://e:/path/xxx.jpg的路径中访问文件。也是对服务器文件的一种保护措施吧  
+参照： http://www.luyixian.cn/news_show_105612.aspx  
+```
+package com.immoc.sell.config;
+
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+//新增加一个类用来添加虚拟路径映射
+@Configuration
+public class MyPicConfig implements WebMvcConfigurer {
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        System.out.println("config启动了");
+        //项目路径
+        //String savePath = "\\src\\main\\resources\\static\\upload\\";
+        //String path = System.getProperty("user.dir")+savePath;
+        //本地路径
+        String path = "F:/springboot_sell/src/main/resources/static/article/";
+        registry.addResourceHandler("/article/**").addResourceLocations("file:"+path);
+    }
+}
+```
