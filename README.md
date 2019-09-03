@@ -1782,3 +1782,9 @@ public class MainController {
 }
 
 ```
+
+# springboot 添加附件图片到static下，结果报404，需去给项目刷新 前端才可以回显
+参考 https://ask.csdn.net/questions/679141
+解决办法：
+第一种：把图片存放在本地其他的路径（非项目路径）；
+第二种:使用图片服务器，图片服务器有本地和云两种形式，云的话推荐使用七牛云这个平台，本地的话推荐使用fastdfs系统
