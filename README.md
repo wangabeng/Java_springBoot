@@ -1815,3 +1815,134 @@ public class MyPicConfig implements WebMvcConfigurer {
     }
 }
 ```
+# springboot 配置的几种用法 
+## 1 @Component与@ConfigurationProperties(prefix = "wechat")配合使用
+1 yml中配置
+```
+wechat:
+  mpAppId: XXXXX
+  mpAppSecret: XXXXX
+  mchId: XXXXXX
+  mchKey: XXXXXXX
+  keyPath: i:/apiclient_cert.p12
+  notifyUrl: http://XXXXX.XXXXX.top/pay/notify
+```
+
+2 WechatAccountConfig.java配置文件
+```
+package com.immoc.sell.config;
+
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
+
+@Component
+@ConfigurationProperties(prefix = "wechat")
+public class WechatAccountConfig {
+	private String mpAppId;
+	private String mpAppSecret;
+	//商户号
+	private String mchId;
+	// 商户秘钥
+	private String mchKey;
+	// 商户证书路径
+	private String keyPath;
+	// 预支付订单生成或异步通知地址
+	private String notifyUrl;
+	
+	public String getMpAppId() {
+		return mpAppId;
+	}
+	public void setMpAppId(String mpAppId) {
+		this.mpAppId = mpAppId;
+	}
+	public String getMpAppSecret() {
+		return mpAppSecret;
+	}
+	public void setMpAppSecret(String mpAppSecret) {
+		this.mpAppSecret = mpAppSecret;
+	}
+	public String getMchId() {
+		return mchId;
+	}
+	public void setMchId(String mchId) {
+		this.mchId = mchId;
+	}
+	public String getMchKey() {
+		return mchKey;
+	}
+	public void setMchKey(String mchKey) {
+		this.mchKey = mchKey;
+	}
+	public String getKeyPath() {
+		return keyPath;
+	}
+	public void setKeyPath(String keyPath) {
+		this.keyPath = keyPath;
+	}
+	public String getNotifyUrl() {
+		return notifyUrl;
+	}
+	public void setNotifyUrl(String notifyUrl) {
+		this.notifyUrl = notifyUrl;
+	}
+	
+}
+
+```
+3 使用该配置类  
+```
+	@Autowired
+	private WechatAccountConfig wechatAccountConfig;
+	// 使用配置数据
+	wechatAccountConfig.getMpAppSecret()
+```
+## 2 @Component与@Bean配合使用
+@Component去告诉Spring，我是一个bean，你要来管理我，然后使用@AutoWired注解去装配Bean(所谓装配，就是管理对象直接的协作关系)。  
+用@Bean注解的方法：会实例化、配置并初始化一个新的对象，这个对象会由spring IoC 容器管理。
+1 定义  
+```
+package com.immoc.sell.config;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
+
+import me.chanjar.weixin.mp.api.WxMpConfigStorage;
+import me.chanjar.weixin.mp.api.WxMpInMemoryConfigStorage;
+import me.chanjar.weixin.mp.api.WxMpService;
+import me.chanjar.weixin.mp.api.impl.WxMpServiceImpl;
+
+@Component
+public class WeChatMpConfig {
+
+	@Autowired
+	private WechatAccountConfig wechatAccountConfig;
+
+	@Bean
+	public WxMpService wxMpService() {
+		WxMpService wxMpService = new WxMpServiceImpl();
+		wxMpService.setWxMpConfigStorage(wxMpConfigStorage());
+		return wxMpService; // 这个对象会由spring IoC 容器管理。
+	}
+
+	@Bean
+	public WxMpConfigStorage wxMpConfigStorage() {
+		WxMpInMemoryConfigStorage wxMpConfigStorage = new WxMpInMemoryConfigStorage();
+		wxMpConfigStorage.setAppId(wechatAccountConfig.getMpAppId());
+		wxMpConfigStorage.setSecret(wechatAccountConfig.getMpAppSecret());
+		return wxMpConfigStorage; // 这个对象会由spring IoC 容器管理。
+	}
+}
+
+```
+2 使用  
+那么使用@Autowired的原理是什么？  
+其实在启动spring IoC时，容器自动装载了一个AutowiredAnnotationBeanPostProcessor后置处理器，当容器扫描到@Autowied、@Resource或@Inject时，就会在IoC容器自动查找需要的bean，并装配给制定的数据。  
+如果查询的结果不止一个，那么@Autowired会根据名称来查找  
+如果查询的结果为空，那么会抛出异常。解决方法时，使用required=false  
+```
+    @Autowired
+    private WxMpService wxMpService;
+    
+    wxMpService.doSTH() // do sth
+```
