@@ -1946,3 +1946,15 @@ public class WeChatMpConfig {
     
     wxMpService.doSTH() // do sth
 ```
+# springboot打包最佳实践
+# springboot 在eclipse中可以正常运行 但是执行打包命令后 很多依赖找不到 
+解决办法  
+1 把项目所有的依赖包拷贝到一个文件夹下 使用mvn dependency:copy-dependencies 抽取jar到target/dependency  
+```
+mvn dependency:copy-dependencies
+```
+2 eclipse项目文件夹 -  build path - buildpath configuration -libraties - add jars - 找到打包依赖的文件夹 - 确认
+3 打包
+```
+mvn package -Dmaven.test.skip=true // mvn  package -Dmaven.test.skip=true 是先清理 如果用clean了可能会打包时候把arget/dependency清理掉导致打包找不到依赖而失败
+```
