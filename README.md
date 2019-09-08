@@ -1969,3 +1969,37 @@ org.springframework.beans.factory.BeanCreationException: Error creating bean wit
 ```
 @SpringBootTest(classes = {SellApplication.class},webEnvironment =SpringBootTest.WebEnvironment.RANDOM_PORT)
 ```
+# @Slf4j注解中 log 报错
+产生原因：可能你使用的开发工具没有集成lombok.jar  
+
+解决办法：复制你项目中依赖lombok.jar  这个版本的jar。这里以eclipse为例： 
+
+把这个lombok.jar复制到你eclipse平级目录中，然后在eclipse.ini加上  -javaagent:D:\eclipse-jee-2019-06\lombok.jar ，重新打开eclipse即可
+lombok.jar  ： 下载地址   https://www.projectlombok.org/all-versions
+```
+package com.runjie.consult;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+
+import lombok.extern.slf4j.Slf4j;
+
+@RunWith(SpringRunner.class)
+@SpringBootTest
+@Slf4j
+public class LogerTest2 {
+	
+	@Test
+	public void test2 () {
+		String name = "test";
+		String age = "18";
+		log.info("name:{} and age: {}", name, age);
+		log.debug("debug...");
+		log.info("info..." + "haha");
+		log.error("error...");
+	}
+}
+
+```
