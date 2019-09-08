@@ -1967,5 +1967,5 @@ org.springframework.beans.factory.BeanCreationException: Error creating bean wit
 解决办法：
 只需要在测试类增加注解
 ```
-@SpringBootTest(classes = {Application.class},webEnvironment =SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(classes = {SellApplication.class},webEnvironment =SpringBootTest.WebEnvironment.RANDOM_PORT)
 ```
