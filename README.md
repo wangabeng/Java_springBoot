@@ -1958,3 +1958,14 @@ mvn dependency:copy-dependencies
 ```
 mvn package -Dmaven.test.skip=true // mvn  package -Dmaven.test.skip=true 是先清理 如果用clean了可能会打包时候把arget/dependency清理掉导致打包找不到依赖而失败
 ```
+# springboot引入websocket后 进行单元测试报错
+```
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2019-09-08 14:47:10,634 - Application run failed
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'serverEndPointExporter' defined
+```
+解决办法：
+只需要在测试类增加注解
+```
+@SpringBootTest(classes = {Application.class},webEnvironment =SpringBootTest.WebEnvironment.RANDOM_PORT)
+```
