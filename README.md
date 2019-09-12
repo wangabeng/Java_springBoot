@@ -2046,3 +2046,52 @@ fangfa (@RequestBody Map<String, Object> params)
 ```
 params.get("userName").toString();
 ```
+# axios发送请求 springboot无法记录session 根源是前端无法发送cookie
+前端设置允许cookie
+```
+import {BASEURL} from "src/api/config.js"
+import axios from 'axios'
+/*axios.defaults.baseURL = BASEURL;
+axios.defaults.crossDomain = true;
+axios.defaults.withCredentials = true; // 携带cookie 记录session
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+
+export default axios*/
+// 创建 axios 实例
+let http = axios.create({
+  headers: {'Content-Type': 'application/json'},
+  baseURL: BASEURL,
+  timeout: 60000,
+  withCredentials: true,
+})
+
+export default http
+```
+后端设置：
+```
+package com.runjie.consult.config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
+
+@Configuration
+public class CorsConfig {
+	@Bean
+    public CorsFilter corsFilter() {
+        final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        final CorsConfiguration corsConfiguration = new CorsConfiguration();
+        corsConfiguration.addAllowedHeader("*");
+        corsConfiguration.addAllowedOrigin("*");
+        corsConfiguration.addAllowedMethod("*");
+        //关键配置
+        corsConfiguration.setAllowCredentials(true); // 允许携带cookie
+        source.registerCorsConfiguration("/**", corsConfiguration);
+        return new CorsFilter(source);
+    }
+
+}
+
+```
