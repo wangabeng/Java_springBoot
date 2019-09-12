@@ -2036,3 +2036,9 @@ nohup java -jar xxxx.jar &
 
 将java -jar xxxx.jar 加入  nohup   &中间，也可以实现
 ```
+# axios发送post请求，后端用常规HttpServletRequest无法接受到请求参数
+原因： 前端axios发送post请求是以json方式发送的，所以，后端也要以json方式接收
+解决办法  
+```
+fangfa (@RequestBody Map<String, Object> params)
+```
