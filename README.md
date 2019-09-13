@@ -2095,3 +2095,12 @@ public class CorsConfig {
 }
 
 ```
+# 前端如果隔一段时间访问sringboot后端连接的MYSQL 就会出现连接数据库错误 报错信息 mysql SQL Error: 0, SQLState: 08003
+解决办法 参照 https://stackoverflow.com/questions/30336861/spring-boot-communications-link-failure-after-some-hours-of-inactivity-with-hib
+在yml文件中添加配置
+```
+spring.datasource.tomcat.testWhileIdle = true
+spring.datasource.tomcat.timeBetweenEvictionRunsMillis = 60000
+spring.datasource.tomcat.validationQuery = SELECT 1
+```
+关键时候 害是得依靠谷歌
