@@ -2104,3 +2104,13 @@ spring.datasource.tomcat.timeBetweenEvictionRunsMillis = 60000
 spring.datasource.tomcat.validationQuery = SELECT 1
 ```
 关键时候 害是得依靠谷歌
+
+# 如果静默一段时间 就会报错HikariPool-5 - Failed to validate connection com.mysql.jdbc.JDBC4C
+https://blog.csdn.net/darkread/article/details/89562148  
+解决办法 添加配置  
+```
+spring.datasource.hikari.minimum-idle=3
+spring.datasource.hikari.maximum-pool-size=10
+spring.datasource.hikari.max-lifetime =30000 // 不能小于30秒，否则默认回到1800秒
+spring.datasource.hikari.connection-test-query=SELECT 1
+```
