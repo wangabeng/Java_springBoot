@@ -2114,3 +2114,5 @@ spring.datasource.hikari.maximum-pool-size=10
 spring.datasource.hikari.max-lifetime =30000 // 不能小于30秒，否则默认回到1800秒
 spring.datasource.hikari.connection-test-query=SELECT 1
 ```
+# 利用@Query进行查询  
+https://www.cnblogs.com/powerwu/articles/10717970.html
