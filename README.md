@@ -2125,3 +2125,4 @@ https://www.cnblogs.com/powerwu/articles/10717970.html
 
 # thymeleaf与vue和谐共生  
 spring-boot+thymeleaf(+vuejs)
+https://www.jianshu.com/p/61ea86d88c98
