@@ -818,6 +818,9 @@ public class RedisController {
 ```
 对service中的方法进行测试。  
 
+# jpa最佳实践 SpringDataJpa增删改查
+https://www.cnblogs.com/hawell/p/SpringDataJpa.html
+
 # 在Spring Boot中使用JPA
 参照 <<一步步学spring boot微服务项目实战>>
 ### 1 引入依赖  
