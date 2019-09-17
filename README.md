@@ -2122,3 +2122,6 @@ spring.datasource.hikari.connection-test-query=SELECT 1
 ```
 # 利用@Query进行查询  
 https://www.cnblogs.com/powerwu/articles/10717970.html
+
+# thymeleaf与vue和谐共生  
+spring-boot+thymeleaf(+vuejs)
