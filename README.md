@@ -2154,3 +2154,18 @@ https://www.jianshu.com/p/61ea86d88c98
 </body>
 </html>
 ```
+应用举例二  
+定义片段  
+```
+<div th:fragment="copy(title)">
+           
+	<p th:text="${title}">The awesome application</p>
+      
+</div>
+```
+使用片段    
+```
+    <div th:replace="~{footer :: copy('你好')}">
+    	<p th:text="${title}">The awesome application</p>
+    </div>
+```
