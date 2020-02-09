@@ -2169,3 +2169,6 @@ https://www.jianshu.com/p/61ea86d88c98
     	<p th:text="${title}">The awesome application</p>
     </div>
 ```
+
+# thymeleaf使用简明教程  
+https://www.jianshu.com/p/908b48b10702
