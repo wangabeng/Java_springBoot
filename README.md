@@ -2126,3 +2126,31 @@ https://www.cnblogs.com/powerwu/articles/10717970.html
 # thymeleaf与vue和谐共生  
 spring-boot+thymeleaf(+vuejs)
 https://www.jianshu.com/p/61ea86d88c98
+
+# thymeleaf专题
+## 使用fragment
+现在把html页面中的需要引入的js和css公共部分提取成一个模板，让其他页面在引入这个模板时，只要传入一个当前html的title即可。  
+
+模板文件 commonHead.html（存放路径/resources/templates/common/commonHead.html）
+```
+<head th:fragment="head(title)">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title th:text="${title}">The awesome application</title>
+ 
+	<script type="text/javascript" th:src="@{/static/common/js/jquery/1.8.3/jquery-1.8.3.js}"></script>
+	<script type="text/javascript" th:src="@{/static/common/js/jquery-impromptu/4.2/jquery-impromptu.4.2.js}"></script>
+	
+	<link rel="stylesheet" type="text/css" th:href="@{/static/common/css/table.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/static/common/js/jquery-impromptu/4.2/jquery-impromptu.css}"/>
+</head>
+```
+需要引用模板的网页 test.html  
+```
+<html>
+<head th:include="common/commonHead.html :: head('测试页面')"></head>
+<!--或者<head th:include="common/commonHead.html :: head(title='测试页面')"></head>-->
+<body>
+ 
+</body>
+</html>
+```
