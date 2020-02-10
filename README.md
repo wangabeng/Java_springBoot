@@ -2184,3 +2184,14 @@ https://www.jianshu.com/p/908b48b10702
 
 # 自动创建表时，多了一张表hibernate_sequence,为什么？
 这里要指定主键自增策略，默认是以Oracle的方式来实现自增主键。想用mysql的自增方式需要改为@GeneratedValue(strategy = GenerationType.IDENTITY)
+
+# springboot用jpa生成表，没有外键
+```
+spring：  
+    jpa:
+        show-sql: true
+        hibernate:
+          ddl-auto: update
+        database-platform: org.hibernate.dialect.MySQL5InnoDBDialect #设置创建表的引擎为InnoDB
+```
+把方言设置为InnoDB，就ok了
