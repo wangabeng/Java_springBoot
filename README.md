@@ -2181,3 +2181,6 @@ https://www.jianshu.com/p/908b48b10702
 	<optional>true</optional>
 </dependency>
 ```
+
+# 自动创建表时，多了一张表hibernate_sequence,为什么？
+这里要指定主键自增策略，默认是以Oracle的方式来实现自增主键。想用mysql的自增方式需要改为@GeneratedValue(strategy = GenerationType.IDENTITY)
