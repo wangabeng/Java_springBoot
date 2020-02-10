@@ -2172,3 +2172,12 @@ https://www.jianshu.com/p/61ea86d88c98
 
 # thymeleaf使用简明教程  
 https://www.jianshu.com/p/908b48b10702
+
+# 自动添加getter setter注解
+```
+<dependency>
+	<groupId>org.projectlombok</groupId>
+	<artifactId>lombok</artifactId>
+	<optional>true</optional>
+</dependency>
+```
