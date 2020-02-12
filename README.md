@@ -2195,3 +2195,70 @@ spring：
         database-platform: org.hibernate.dialect.MySQL5InnoDBDialect #设置创建表的引擎为InnoDB
 ```
 把方言设置为InnoDB，就ok了
+
+# Java生成MD5的两种方式
+### 1 原生的
+```
+package com.pibigstar.common.utils;
+
+import java.security.MessageDigest;
+
+/**
+ * MD5加密工具类
+ * @author pibigstar
+ *
+ */
+public class MyMD5Util {
+	//盐，用于混交md5
+	private static final String slat = "&%5123***&&%%$$#@";
+	public static String encrypt(String dataStr) {
+		try {
+			dataStr = dataStr + slat;
+			MessageDigest m = MessageDigest.getInstance("MD5");
+			m.update(dataStr.getBytes("UTF8"));
+			byte s[] = m.digest();
+			String result = "";
+			for (int i = 0; i < s.length; i++) {
+				result += Integer.toHexString((0x000000FF & s[i]) | 0xFFFFFF00).substring(6);
+			}
+			return result;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return "";
+	}
+
+}
+
+```
+
+## 2 使用Spring中的工具类
+```
+package com.pibigstar.common.utils;
+
+import org.springframework.util.DigestUtils;
+
+import com.pibigstar.common.Constant;
+
+/**
+ * MD5工具类
+ * @author pibigstar
+ *
+ */
+public class MD5Util {
+	//盐，用于混交md5
+	private static final String slat = "&%5123***&&%%$$#@";
+	/**
+	 * 生成md5
+	 * @param seckillId
+	 * @return
+	 */
+	public static String getMD5(String str) {
+		String base = str +"/"+slat;
+		String md5 = DigestUtils.md5DigestAsHex(base.getBytes());
+		return md5;
+	}
+
+}
+```
