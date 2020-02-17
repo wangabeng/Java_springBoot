@@ -2373,3 +2373,30 @@ public class LoginConfig implements WebMvcConfigurer {
     }
 }
 ```
+
+# JPA 原生SQL分页查询,踩坑记录
+https://blog.csdn.net/u010928589/article/details/90611665
+1 定义dao层
+```
+public interface BlogRepository extends JpaRepository<Blog, Long>  {
+	//根据id获取数据源
+	@Query(value = "select * from t_blog where title=?1 ", nativeQuery = true)
+	public Page<Blog> findBlogById(String title, Pageable pageable);
+}
+```
+2 使用test测试
+```
+@RunWith(SpringRunner.class)
+@SpringBootTest
+public class BlogRepositoryTest {
+	@Autowired
+	private BlogRepository blogRepository;
+
+	@Test
+	public void findOneType () throws Exception {
+		Pageable pageable = PageRequest.of(0,5);
+		System.out.println(blogRepository.findBlogById("测试", pageable).getNumberOfElements());
+	}
+	
+}
+```
