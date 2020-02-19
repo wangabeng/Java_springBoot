@@ -1374,10 +1374,76 @@ VO（value object）
 用于返回给前端交互。传给前端的对象被称作VO（web层）。也就是前端调用你restful接口你返回的对象。
 
 DTO（Data Transfer Object）
-用于业务层（biz层）的处理
+(Data Transfer Object 数据传输对象)，有时候我们仅仅需要获得某一个表的几个字段
+，所以此时可以用DTO存储这几个字段。
 
-一般来说的流程就是
+一般来说的流程就是：
+1 保存数据
+前端  ->  接受form表单（或form对象 OrderForm） -> 转成dto(OrderDTO)  -> 拷贝dto对象属性至entity（OrderMaster）  -> 保存数据库
+代码举例
+	// 创建订单
+	@PostMapping("/create")
+	public ResultVO<Map<String, String>> create(@Valid OrderForm orderForm, BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+			// 打印日志
+			throw new SellException(ResultEnum.PARAM_ERROR.getCode(),
+					bindingResult.getFieldError().getDefaultMessage());
+		}
+		// form转成orderDTO
+		OrderDTO orderDTO = OrderForm2OrderDTOConverter.convert(orderForm);
+		if (CollectionUtils.isEmpty(orderDTO.getOrderDetailList())) {
+			// 购物车不能为空
+			throw new SellException(ResultEnum.CART_EMPTY);
+		}
+		// 创建订单 （orderDTO 拷贝属性至 orderMaster 然后存储orderMaster）  （BeanUtils.copyProperties(orderDTO, orderMaster);orderMasterRepository.save(orderMaster);）
+		OrderDTO createResult = orderService.create(orderDTO); // 
+
+		Map<String, String> map = new HashMap<>();
+		map.put("orderId", createResult.getOrderId());
+
+		// 返回json数据到前端
+
+		return ResultVOUtil.success(map);
+	}
+
+2 从数据库中取出数据 及经过处理 返到前端（比如查询操作）orderMaster -》 orderDTO -》 orderVO	
+
+	// 订单列表
+	@GetMapping("/list")
+	public ResultVO<List<OrderDTO>> list(@RequestParam("openid") String openid,
+			@RequestParam(value = "page", defaultValue = "0") Integer page,
+			@RequestParam(value = "size", defaultValue = "10") Integer size) {
+		if (StringUtils.isEmpty(openid)) {
+			// 打印日志
+			throw new SellException(ResultEnum.PARAM_ERROR);
+		}
+		PageRequest request = PageRequest.of(page, size);
+		// 查询出orderMaster 然后转成orderDTO  OrderMasterToOrderDTOConverter
+		Page<OrderDTO> orderDTOPage = orderService.findList(openid, request);
+
+		return ResultVOUtil.success(orderDTOPage.getContent());
+	}
+
+
+	@Override
+	public Page<OrderDTO> findList(String buyerOpenid, Pageable pageable) {
+		// TODO Auto-generated method stub
+		Page<OrderMaster> orderMasterPage = orderMasterRepository.findByBuyerOpenid(buyerOpenid, pageable);
+		List<OrderDTO> orderDTOList = OrderMasterToOrderDTOConverter.convert(orderMasterPage.getContent());
+		Page<OrderDTO> orderDTOPage = new PageImpl<OrderDTO>(orderDTOList, pageable,
+				orderMasterPage.getTotalElements());
+		return orderDTOPage;
+	}
+
+
 从数据库中取出的对象，比如是data ，那么就先需要转换成dataDTO处理数据。然后返回到restful前转换成需要的VO
+
+总结如下：
+
+web页    >   dto（比如form表单转化成dtO）  >    数据库持久层entity 比如保存起来等
+
+web页    <   VO（dto转成VO）  <    dto(service层把实体类转成dto)    <     数据库持久层 entity
+
 ```
 
 # 自动注入实体entity报错  
