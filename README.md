@@ -1591,3 +1591,7 @@ public class AdminIndexController {
 	}
 }
 ```
+
+# jackson.databind之 com.fasterxml.jackson.databind.ser...错误
+https://blog.csdn.net/A13432421434/article/details/75330675
+在嵌套的属性上添加一个注解@JsonIgnore
