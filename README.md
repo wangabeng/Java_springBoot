@@ -1592,6 +1592,38 @@ public class AdminIndexController {
 }
 ```
 
-# jackson.databind之 com.fasterxml.jackson.databind.ser...错误
-https://blog.csdn.net/A13432421434/article/details/75330675
-在嵌套的属性上添加一个注解@JsonIgnore
+# jackson.databind之 com.fasterxml.jackson.databind.ser...错误  
+https://blog.csdn.net/A13432421434/article/details/75330675  
+在嵌套的属性上添加一个注解  
+@JsonIgnore
+
+# springboot时间戳 在mvc中不能正常显示（以自动生成数据表为例）
+1 实体类 在属性上配置  
+```
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date createTime;
+```
+在mysql中自动生成create_time 格式为datetime  
+
+2 配置文件yml中配置  
+只正对responsebody 即以json格式输出有帮助  
+```
+spring:  
+  jackson:
+    default-property-inclusion: NON_NULL
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss 
+```
+3 在前端MVC中输出为    
+2020-02-24 20:31:13.0  
+
+json格式输出为 正常  
+2020-02-24 20:31:13  
+
+4 在前端模板中这样些  
+HH:mm 24小时制  hh12小时制  
+```
+<td th:text="${#dates.format(blog.createTime, 'yyyy-MM-dd  HH:mm')}"></td>
+<!-- <td th:text="${blog.createTime}"></td> -->
+```
+
