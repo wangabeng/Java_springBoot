@@ -1627,3 +1627,51 @@ HH:mm 24小时制  hh12小时制
 <!-- <td th:text="${blog.createTime}"></td> -->
 ```
 
+# mavan打包springboot项目报错
+spring boot 生成项目发生程序包org.junit不存在等错误
+```
+[ERROR] /D:/blog/src/main/java/com/run/blog/repository/BlogRepositoryTest.java:[
+13,17] 程序包org.junit不存在
+[ERROR] /D:/blog/src/main/java/com/run/blog/repository/BlogRepositoryTest.java:[
+14,24] 程序包org.junit.runner不存在
+[ERROR] /D:/blog/src/main/java/com/run/blog/repository/BlogRepositoryTest.java:[
+16,45] 程序包org.springframework.boot.test.context不存在
+[ERROR] /D:/blog/src/main/java/com/run/blog/repository/BlogRepositoryTest.java:[
+22,47] 程序包org.springframework.test.context.junit4不存在
+```
+解决方案：
+步骤1：
+删除
+```
+	<repositories>
+		<repository>
+			<id>spring-milestones</id>
+			<name>Spring Milestones</name>
+			<url>https://repo.spring.io/milestone</url>
+		</repository>
+		<repository>
+			<id>spring-snapshots</id>
+			<name>Spring Snapshots</name>
+			<url>https://repo.spring.io/snapshot</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>spring-milestones</id>
+			<name>Spring Milestones</name>
+			<url>https://repo.spring.io/milestone</url>
+		</pluginRepository>
+		<pluginRepository>
+			<id>spring-snapshots</id>
+			<name>Spring Snapshots</name>
+			<url>https://repo.spring.io/snapshot</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</pluginRepository>
+	</pluginRepositories>
+```
+2 把test单元测试文件去掉
