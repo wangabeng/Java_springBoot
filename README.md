@@ -1714,13 +1714,14 @@ sudo service nginx reload
 window
 netstat -aon|findstr 8080
 linux
-netstat -tunlp | grep 8000
-netstat -ntlp 8090
+netstat -tunlp |grep 8080
 
 
 2 找到进程号 终止这个进程
-
+window
 taskkill /f /t /im 9260
+linux
+kill 4993
 
 
 ```
