@@ -1754,3 +1754,14 @@ java -jar sell.jar
 // 修改端口号运行
 java -jar sell.jar -Dserver.port=8030
 ```
+常驻内存运行
+```
+linux中启动 java -jar 后台运行程序
+直接用java -jar xxx.jar，当退出或关闭shell时，程序就会停止掉。以下方法可让jar运行后一直在后台运行。
+
+
+
+java -jar xxx.jar &  
+
+说明： 在末尾加入 & 符号
+```
