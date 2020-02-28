@@ -1675,3 +1675,81 @@ spring boot 生成项目发生程序包org.junit不存在等错误
 	</pluginRepositories>
 ```
 2 把test单元测试文件去掉
+
+# Springboot部署流程
+## 1 打包 
+需要把测试文件删掉 否则无法打包  
+打包命令  
+```
+// -Dmaven.test.skip=true 跳过单元测试
+mvn clean package -Dmaven.test.skip=true
+```
+## 2 打包文件放到linux服务器上
+放置位置
+```
+// 放置位置
+/opt/javaapps/
+
+open sis
+账号
+密码
+put something.txt another.txt
+put -r D:/www-XXX-com-80 /data/www/www-XXX-com-80
+put D:/blog/target/blog-0.0.1-SNAPSHOT.jar /opt/javaapps/blog.jar
+
+conf配置文件位于
+cd /etc/nginx/conf.d/
+
+复制命令
+ cp dd.txt  ee.txt
+nginx命令
+现在我们可以使用nginx的控制:
+
+sudo service nginx stop 
+sudo service nginx start 
+sudo service nginx restart
+sudo service nginx reload
+
+1 比如关闭占用8080的
+window
+netstat -aon|findstr 8080
+linux
+netstat -tunlp | grep 8000
+netstat -ntlp 8090
+
+
+2 找到进程号 终止这个进程
+
+taskkill /f /t /im 9260
+
+
+```
+
+ngxin配置
+```
+upstream runjieapi {
+    server 127.0.0.1:3009;  # 3 找到服务器本地3009端口
+}
+
+server {
+    listen       80;
+    server_name   runjieapi.benkid.cn; # 1 外部访问runjieapi.benkid.cn;
+
+    location / {
+        proxy_pass http://runjieapi; # 2 找到代理服务器runjieapi
+        proxy_set_header Host $host;
+        proxy_set_header X-Nginx-proxy true;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_redirect off;
+    }
+}
+```
+
+## 3 运行该文件
+运行命令  
+```
+java -jar sell.jar
+// 修改端口号运行
+java -jar sell.jar -Dserver.port=8030
+```
