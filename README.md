@@ -1765,3 +1765,6 @@ java -jar xxx.jar &
 
 说明： 在末尾加入 & 符号
 ```
+
+# 继承jpa Repository 自定义方法查询  
+https://blog.csdn.net/bird_tp/article/details/83651651
