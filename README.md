@@ -1768,3 +1768,58 @@ java -jar xxx.jar &
 
 # 继承jpa Repository 自定义方法查询  
 https://blog.csdn.net/bird_tp/article/details/83651651
+
+# 关于自关联在单元测试里不显示被维护属性的问题
+在自关联实体类中，通过单元测试得到的属性值为null，但是在controller中是正常显示的，例如comments中自关联属性为
+parentComment 单个  
+replyComments List集合  （在单元测试里为查询某个id的comment，其replyCommnet为空 但是在controller中为正常的 请注意注解）
+```
+@Entity
+@Table(name = "t_comment")
+@Getter
+@Setter
+public class Comment {
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private Long id;
+	private String nicename;
+	private String email;
+	private String content;
+	private String avatar;
+	@JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd")
+	private Date createTime;
+	
+	@JsonIgnore
+	@ManyToOne
+	private Blog blog;
+	
+	
+	
+	//	自关联关系  回复的评论 和 父一级评论
+	@JsonBackReference
+	@OneToMany(cascade = CascadeType.ALL, mappedBy="parentComment")
+	private List<Comment> replyComments = new ArrayList<>();
+	
+	@ManyToOne
+	private Comment parentComment;
+
+	@Override
+	public String toString() {
+		return "Comment [id=" + id + ", nicename=" + nicename + ", email=" + email + ", content=" + content
+				+ ", avatar=" + avatar + ", createTime=" + createTime + ", blog=" + blog + ", replyComments="
+				+ replyComments + ", parentComment=" + parentComment + "]";
+	}
+
+	
+	
+	
+
+}
+
+```
+@JsonBackReference和@JsonManagedReference：这两个标注通常配对使用，通常用在父子关系中
+https://blog.csdn.net/qq_35357001/article/details/55505659
+
+@JsonManagedReference标注维护端 显示在json中  
+@JsonBackReference标注在被维护端 不显示在json中  
+
