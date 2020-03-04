@@ -1823,3 +1823,14 @@ https://blog.csdn.net/qq_35357001/article/details/55505659
 @JsonManagedReference标注维护端 显示在json中  
 @JsonBackReference标注在被维护端 不显示在json中  
 
+# eclipse导入idea出现的几个问题：
+## 1 导入的方式为（即maven项目导入idea的正确方式为）
+new project - maven - 选择项目文件夹  -finish 即可
+
+## 2 IDEA中@Data注解无getter setter 方法
+经过网上一系列查询，得出原因，IDEA编辑器使用依赖 lombok 时，需要安装一个插件，否则，即使导入了正确的依赖，仍然错误。
+setting - plugin - 输入Lombok  -  然后安装install - 然后重新启动idea即可
+
+## 3报红提示：Error: Module not specified
+解决方法
+Run/debug configuration  -   application - blogapplication - Use classpath of mod  - no module(选择blog模块)  -- 应用 即可
