@@ -514,6 +514,13 @@ https://www.jianshu.com/p/ed9d47f92e37
             <optional>true</optional>
         </dependency>
 ```
+
+# idea中热部署失效的问题
+1 添加上面的依赖  
+2 setting - build -compiler -  Build Project automatically 勾选  
+3 然后 Shift+Ctrl+Alt+/，选择Registry，compiler.automake.allow.when.app.running勾选
+4 重新启动即可
+
 # thymleaf在页面中无法获取session数据（本来已经设置好了）报错
 原因是：如果我们添加Thymeleaf 依赖，，而没有进行任何配置，或者添加默认目录，启动应用时就会报错。
 ```
