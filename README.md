@@ -1841,3 +1841,24 @@ setting - plugin - 输入Lombok  -  然后安装install - 然后重新启动idea
 ## 3报红提示：Error: Module not specified
 解决方法
 Run/debug configuration  -   application - blogapplication - Use classpath of mod  - no module(选择blog模块)  -- 应用 即可
+
+# Spring Data JPA使用getOne方法报错：Method threw 'org.hibernate.LazyInitializationException' exception. Cannot evaluate
+https://www.bbsmax.com/A/MAzArvBRJ9/  
+这篇介绍得很明晰
+getOne是懒加载，需要增加这个配置： spring.jpa.properties.hibernate.enable_lazy_load_no_trans=true，但这种方式不太友好，建议不要使用。  
+
+每次初始化一个实体的关联就会创建一个临时的session来加载，每个临时的session都会获取一个临时的数据库连接，开启一个新的事物。这就导致对底层连接池压力很大，而且事物日志也会被每次flush.
+设想一下：假如我们查询了一个分页list每次查出1000条，这个实体有三个lazy关联对象,那么，恭喜你，你至少需要创建3000个临时session+connection+transaction.
+
+参考2  
+https://segmentfault.com/q/1010000012794754  
+使用 shopConfigRepository.findOne("1"); 就不会报错.
+
+不知道怎么回事? 望知情者解惑,万分感谢.  
+getOne 是 lazy load 的  
+
+你加上这个 spring.jpa.properties.hibernate.enable_lazy_load_no_trans=true
+不建议这样用。
+
+总结：  
+不要用getOne  用findById()
