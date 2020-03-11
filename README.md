@@ -1862,3 +1862,111 @@ getOne 是 lazy load 的
 
 总结：  
 不要用getOne  用findById()
+
+
+# 笔记源自视频讲解所做 https://www.bilibili.com/video/av87325381?p=67
+# jpql 是通过操作实体类来改变数据库
+## 执行update或delete需要添加3个注解
+1 @Modifyng  
+2 需要手动添加事务支持 即@Transactional
+3 默认执行完成后会回滚事务，但是实际上数据库中值没有更新，此时需要设置不自动回滚
+@RollBack(value=false)
+
+# Jpa不同的查询 
+1 用repository查询 （面向对象查询）  
+2 JPQL查询（面向对象查询）  
+例如
+```
+@Query(value = "update Customer set custName = ?2 where custId = ?!")
+@Modifying
+public void updateCustomer(Long custId, String custName);
+```
+
+3 原生SQL语句 (作为补充) 
+```
+定义
+@Query(value = "select * from cst_customer where cust_name like ?1", nativeQuery = true)
+public List<Object []> findSql(String name); // 查询的结果是List集合,每个元素是个 Object数组
+
+使用
+@Test
+public void testFindSql () {
+	List<Object[]> list = customerDao.findSql("传智");
+	for (Object [] obj : list) {
+		System.out.println(Arrays.toString(obj));
+	}
+}
+// 查询结果如下
+[1,null,it教育,null,传智,null,null]
+[1,null,it教育,null,传智1,null,null]
+[1,null,it教育,null,传智2,null,null]
+
+```
+
+4 根据方法规则名称查询 先在repository中定义
+```
+findBy开头 + 对象属性首字母大写  + 查询方式Like | isnull 等  
+
+public List<Customer> findByCustNameLike(String custName); 
+
+多条件查询
+findBy + 属性名 +  查询方式 + 多条件连接符and | or  + 属性名 +  查询方式
+例如: 
+使用客户名称模糊匹配 和 客户所属行业精准匹配
+public Customer findByCustNameLikeAndCustIndustry(String custName, String custIndustry); // 参数顺序不能反 没有占位符了
+
+
+```
+
+5 动态查询 即查询条件不固定的 见博客系统
+
+# springdata jpa多表操作
+一对一（用得少）
+一对多（用得多）
+一的一方是主表（例如type表，主键id） ，多的一方是从表（例如blog表, type属性，对应数据表是type_id外键）
+
+多对多（用得多）
+用中间表，由两个字段组成，分别指向两个表的主键
+
+# 1 一对多关系
+## type 对 blog 
+
+```
+type实体类(主表)：(1、2是配置从type找到blog)
+// 1 声明关系注解 targetEntity指对方对象的字节码 即Blog类
+@OneToMany(targetEntity = Blog.class) 
+// 2 配置外键注解 外键是从表上面 即blog表的type_id，然后参照是主表type表的主键即id
+// 在type类即（一的一方）添加了外键的配置，也是维护方（即在type上维护blogs）
+@JoinColumn(name="type_id", referenceColumnName="id")
+private Set<Blog> blogs = new HashSet<>();
+
+
+blog类：(1、2是配置从blog找到type)  
+// 1 声明关系  
+@ManyToOne(targetEntity = Type.class) 
+// 2 配置外键对应主键的名称 即参照主表的外键名称
+@JoinColumn(name="id", referenceColumnName="type_id")
+private Type type = new Type();
+
+以上配置了从blog找到type，也配置了从type找到blog，是配置了双向的关系。
+
+如何放弃维护权：
+不过一般会在一的一方放弃维护权利，放弃很简单，把注解注释掉即可
+即在blog上的type上取消注解@ManyToOne括号内的注解以及@JoinColum注解，但是要注明我是被Type的属性blogs维护的。
+@ManyToOne(MappedBy="type")
+private Type type = new Type();
+```
+
+## 一对一级联删除
+比如 我想删除一个分类，我就要删除所属分类的blogs，或我要删除一个blog，我要删除这个博客所属的分类。  
+级联操作的步骤：  
+1 区分操作主体  
+2 在需要操作的主体实体类上，添加级联属性注解
+3 cascade（配置级联） 
+
+级联添加也是一个道理，比如我要保存一个blog，同时也在type上保存新的type实体。级联删除也是一个道理。  
+
+需求：在type上添加一个blog，同时自动添加一个blog实体，此时是在type上操作的，type就是操作主体。此时在映射关系上加个配置cascade属性（CascadeType.All所有级联操作）
+type.class:  
+@ManyToOne(mappedBy="type", cascade = CascadeType.All)
+private Set<Blog> blogs = new HashSet<>();
