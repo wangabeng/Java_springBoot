@@ -1976,6 +1976,7 @@ private Set<Blog> blogs = new HashSet<>();
 # entity的toString方法 只toString基本属性，否则可能会死循环。
 
 # springboot中定义错误页面，jar打包和war打包定义的方式不同，这里说的是jar打包自定义错误页面。
+参照 https://www.jianshu.com/p/7c94d1ac2092  
 第一种方式  
 最简单的方式是直接在resources/templates目录下创建error.html页面，此时如果访问不存在的画面就会直接进入此画面。  
   
