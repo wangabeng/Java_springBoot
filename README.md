@@ -1865,6 +1865,8 @@ getOne 是 lazy load 的
 
 
 # 笔记源自视频讲解所做 https://www.bilibili.com/video/av87325381?p=67
+
+https://www.bilibili.com/video/av95156296?p=84
 # jpql 是通过操作实体类来改变数据库
 ## 执行update或delete需要添加3个注解
 1 @Modifyng  
@@ -1944,8 +1946,8 @@ private Set<Blog> blogs = new HashSet<>();
 blog类：(1、2是配置从blog找到type)  
 // 1 声明关系  
 @ManyToOne(targetEntity = Type.class) 
-// 2 配置外键对应主键的名称 即参照主表的外键名称
-@JoinColumn(name="id", referenceColumnName="type_id")
+// 2 配置外键对应主键的名称 即参照主表的外键名称 name是外键名type_id,referenceColumnName是主键名id 
+@JoinColumn(name="type_id", referenceColumnName="id")
 private Type type = new Type();
 
 以上配置了从blog找到type，也配置了从type找到blog，是配置了双向的关系。
@@ -1970,3 +1972,76 @@ private Type type = new Type();
 type.class:  
 @ManyToOne(mappedBy="type", cascade = CascadeType.All)
 private Set<Blog> blogs = new HashSet<>();
+
+# entity的toString方法 只toString基本属性，否则可能会死循环。
+
+# springboot中定义错误页面，jar打包和war打包定义的方式不同，这里说的是jar打包自定义错误页面。
+第一种方式  
+最简单的方式是直接在resources/templates目录下创建error.html页面，此时如果访问不存在的画面就会直接进入此画面。  
+  
+第二种方式是实现ErrorPageRegistrar接口，定义具体异常的URL路径：  
+
+```
+import org.springframework.boot.web.servlet.ErrorPage;
+import org.springframework.boot.web.servlet.ErrorPageRegistrar;
+import org.springframework.boot.web.servlet.ErrorPageRegistry;
+import org.springframework.http.HttpStatus;
+
+public class MyErrorPageRegistrar implements ErrorPageRegistrar {
+    @Override
+    public void registerErrorPages(ErrorPageRegistry errorPageRegistry) {
+        ErrorPage page404 = new ErrorPage(HttpStatus.NOT_FOUND, "/404");
+        ErrorPage page500 = new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, "/500");
+
+        errorPageRegistry.addErrorPages(page404, page500);
+    }
+}
+```  
+
+然后在一个配置类中声明该Bean:
+```
+package com.run.blog.errorPage;
+
+import org.springframework.boot.web.server.ErrorPageRegistrar;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class MyErrorPageBean {
+    @Bean
+    public ErrorPageRegistrar errorPageRegistrar(){
+        return new MyErrorPageRegistrar();
+    }
+
+}
+
+```  
+在Controller中添加404和500：  
+```
+package com.run.blog.errorPage;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+public class ErrorPageController {
+    /**
+     * 404 error
+     * @return
+     */
+    @RequestMapping("/404")
+    public String error404() {
+        return "front/404";
+    }
+
+    /**
+     * 500 error
+     * @return
+     */
+    @RequestMapping("/500")
+    public String error500() {
+        return "front/500";
+    }
+}
+
+```
