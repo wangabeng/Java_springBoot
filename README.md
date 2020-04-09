@@ -2046,3 +2046,21 @@ public class ErrorPageController {
 }
 
 ```
+
+# idea初始化springboot项目，报错：
+```
+Error:(3, 32) java: 程序包org.springframework.boot不存在
+Error:(4, 46) java: 程序包org.springframework.boot.autoconfigure不存在
+Error:(6, 2) java: 找不到符号
+  符号: 类 SpringBootApplication
+  Error:(10, 9) java: 找不到符号
+  符号:   变量 SpringApplication
+  位置: 类 com.exdd.demo3.Demo3Application
+```
+解决方法：
+```
+SpringBoot项目，maven管理，新建的一个model，代码编译、打包都可以，启动就报找不到类，找不到方法，连jdk的包都找不到，各种删jar包，刷新，重启都试过，不行。
+
+解决办法：  
+把导入项目时idea自动生成的文件删除，关闭idea，重新导入项目，就可以了。
+```
