@@ -2064,3 +2064,6 @@ SpringBoot项目，maven管理，新建的一个model，代码编译、打包都
 解决办法：  
 把导入项目时idea自动生成的文件删除，关闭idea，重新导入项目，就可以了。
 ```
+
+# IDEA导入springboot的正确方式：  
+导入maven项目 - 选择springboot项目文件夹。为什么每次导入都发生错误，因为pom文件自动改变了，导致找不到依赖。方法: ctrl + z 返回一步，恢复原来的pom文件设置，然后reimport安装依赖，然后重新rebuild，然后重新启动idea即可。
