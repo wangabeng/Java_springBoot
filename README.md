@@ -2067,3 +2067,16 @@ SpringBoot项目，maven管理，新建的一个model，代码编译、打包都
 
 # IDEA导入springboot的正确方式：  
 导入maven项目 - 选择springboot项目文件夹。为什么每次导入都发生错误，因为pom文件自动改变了，导致找不到依赖。方法: ctrl + z 返回一步，恢复原来的pom文件设置，然后reimport安装依赖，然后重新rebuild，然后重新启动idea即可。
+
+# 解决idea导入maven项目缺少jar包的问题  
+https://blog.csdn.net/qq_29410905/article/details/80084510  
+亲测有效果  
+
+# idea导入maven项目缺少jar包的问题解决汇总：
+## setting中设置maven
+settings - Build - Build tools - maven 勾选 Always update snapshots, 然后在maven home directory中切换成自己安装的maven目录，勾选override（2个）;  
+settings - Build - Build tools - maven - importing 勾选import maven projects automatically
+
+## 项目的pom文件右键 maven - reimport 
+## 或 项目的pom文件右键 maven - dowload 依赖
+## 或 删除.idea 然后重新启动idea 或重新导入项目
