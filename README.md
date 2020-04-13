@@ -2080,3 +2080,9 @@ settings - Build - Build tools - maven - importing 勾选import maven projects a
 ## 项目的pom文件右键 maven - reimport 
 ## 或 项目的pom文件右键 maven - dowload 依赖
 ## 或 删除.idea 然后重新启动idea 或重新导入项目
+
+# idea启动项目报错 java.lang.IllegalStateException: Failed to load property source from location 'classpath:/application-dev.yml'
+原因：idea编码问题  
+IntelliJ IDEA 统一设置编码为utf-8编码  
+https://blog.csdn.net/fengqing5578/article/details/80648753  
+File->Settings->Editor->File Encodings
