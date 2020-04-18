@@ -2086,3 +2086,17 @@ settings - Build - Build tools - maven - importing 勾选import maven projects a
 IntelliJ IDEA 统一设置编码为utf-8编码  
 https://blog.csdn.net/fengqing5578/article/details/80648753  
 File->Settings->Editor->File Encodings
+
+# spingboot 单元测试repository报错：java.util.NoSuchElementException: No value present
+是因为未进行非空判断
+```
+    @Test
+    public void testString () {
+        Optional<ClientDetail> optional = clientDetailRepository.findById(1L);
+        // 非空判断
+        if (optional != null && optional.isPresent()) {
+            ClientDetail aaa = optional.get();
+            System.out.print("Ddddd:" +  aaa.getCurCerti());
+        }
+    }
+```
